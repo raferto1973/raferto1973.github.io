@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rafa Fernandez | Product-Focused Web Builder</title>
+    <meta
+        name="description"
+        content="Public portfolio for Rafa Fernandez featuring selected web products, technical highlights, and delivery experience without exposing private repositories."
+    >
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="page-shell">
+        <header class="hero">
+            <nav class="topbar">
+                <a class="brand" href="#top" aria-label="Rafa Fernandez home">RF</a>
+                <div class="topbar-links">
+                    <a href="#projects" data-i18n="navProjects">Projects</a>
+                    <a href="#gallery" data-i18n="navGallery">Gallery</a>
+                    <a href="#experience" data-i18n="navExperience">Experience</a>
+                    <a href="#contact" data-i18n="navContact">Contact</a>
+                </div>
+                <div class="language-toggle" aria-label="Language selector">
+                    <button class="lang-button active" type="button" data-lang="en">EN</button>
+                    <button class="lang-button" type="button" data-lang="es">ES</button>
+                </div>
+            </nav>
+
+            <section class="hero-grid" id="top">
+                <div class="hero-copy reveal">
+                    <p class="eyebrow" data-i18n="heroEyebrow">Bilingual public-facing project portfolio</p>
+                    <h1 data-i18n="heroTitle">Building polished digital products without exposing the private engine room.</h1>
+                    <p class="hero-text" data-i18n="heroText">
+                        I design and ship web products with a strong focus on usability, responsive frontend execution,
+                        and pragmatic full-stack delivery. This portfolio shows what each product does, what I solved,
+                        and how it was built, while keeping production repositories private where needed.
+                    </p>
+                    <div class="hero-actions">
+                        <a class="button button-primary" href="#projects" data-i18n="heroPrimaryCta">View selected work</a>
+                    </div>
+                    <div class="hero-proof">
+                        <article class="proof-card">
+                            <span class="proof-label" data-i18n="proofLabelOne">Live case</span>
+                            <strong>RF Travel Planner</strong>
+                            <p data-i18n="proofTextOne">Released product with real users, private source, public proof.</p>
+                        </article>
+                        <article class="proof-card">
+                            <span class="proof-label" data-i18n="proofLabelTwo">Positioning</span>
+                            <strong data-i18n="proofStrongTwo">Public outcomes, private code</strong>
+                            <p data-i18n="proofTextTwo">The portfolio focuses on value delivered, technical depth, and release readiness.</p>
+                        </article>
+                    </div>
+                </div>
+
+                <aside class="hero-panel reveal reveal-delay-1">
+                    <p class="panel-label" data-i18n="focusLabel">Current focus</p>
+                    <ul class="focus-list">
+                        <li data-i18n="focusOne">Product-oriented web applications</li>
+                        <li data-i18n="focusTwo">Responsive UI for desktop and mobile</li>
+                        <li data-i18n="focusThree">PWA hardening and release readiness</li>
+                        <li data-i18n="focusFour">Auth, permissions, and Supabase-backed flows</li>
+                    </ul>
+                    <div class="hero-stats">
+                        <article>
+                            <span>01</span>
+                            <p data-i18n="statOne">Released product already live in production</p>
+                        </article>
+                        <article>
+                            <span data-i18n="statTwoTitle">Private</span>
+                            <p data-i18n="statTwo">Source remains private when business logic should stay internal</p>
+                        </article>
+                    </div>
+                    <div class="signal-grid">
+                        <article class="signal-card">
+                            <div class="signal-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" role="presentation"><path d="M4 6.5A2.5 2.5 0 0 1 6.5 4h11A2.5 2.5 0 0 1 20 6.5v11a2.5 2.5 0 0 1-2.5 2.5h-11A2.5 2.5 0 0 1 4 17.5zm3 1.5v8h10V8zm2 2h6v1.5H9zm0 3h4v1.5H9z"/></svg>
+                            </div>
+                            <div>
+                                <h3 data-i18n="signalOneTitle">Case studies</h3>
+                                <p data-i18n="signalOneText">Each project is framed as a product story instead of a raw repository dump.</p>
+                            </div>
+                        </article>
+                        <article class="signal-card">
+                            <div class="signal-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" role="presentation"><path d="M12 3l7 4v5c0 4.3-2.6 8.2-7 9-4.4-.8-7-4.7-7-9V7zm0 2.1L7 7.9V12c0 3.3 1.8 6.1 5 6.9 3.2-.8 5-3.6 5-6.9V7.9zm-1 4.4h2v4h-2zm0 5.3h2v2h-2z"/></svg>
+                            </div>
+                            <div>
+                                <h3 data-i18n="signalTwoTitle">Privacy by design</h3>
+                                <p data-i18n="signalTwoText">Enough technical detail to show competence, without leaking sensitive implementation.</p>
+                            </div>
+                        </article>
+                    </div>
+                </aside>
+            </section>
+        </header>
+
+        <main>
+            <section class="section intro reveal">
+                <div>
+                    <p class="section-kicker" data-i18n="introKicker">Why this format works</p>
+                    <h2 data-i18n="introTitle">Show the value, not the repository internals.</h2>
+                </div>
+                <p data-i18n="introText">
+                    Each case highlights the product goal, the experience delivered, and the technical challenges solved.
+                    That gives recruiters, clients, or collaborators enough evidence to assess the work without needing access
+                    to the underlying private repositories.
+                </p>
+            </section>
+
+            <section class="section" id="projects">
+                <div class="section-heading reveal">
+                    <div>
+                        <p class="section-kicker" data-i18n="projectsKicker">Selected projects</p>
+                        <h2 data-i18n="projectsTitle">Featured work</h2>
+                    </div>
+                    <div class="chip-row" aria-label="Project filters">
+                        <button class="chip active" type="button" data-filter="all" data-i18n="filterAll">All</button>
+                        <button class="chip" type="button" data-filter="released" data-i18n="filterReleased">Released</button>
+                        <button class="chip" type="button" data-filter="in-progress" data-i18n="filterProgress">In progress</button>
+                    </div>
+                </div>
+
+                <div class="project-grid">
+                    <article class="project-card reveal" data-status="released">
+                        <div class="project-topline">
+                            <p class="project-tag" data-i18n="projectFourTag">Platform ecosystem · Multi-repo</p>
+                            <span class="project-version">SaaS</span>
+                        </div>
+                        <h3 data-i18n="projectFourTitle">Stockfy</h3>
+                        <p class="project-summary" data-i18n="projectFourSummary">
+                            End-to-end SaaS platform for stock photographers: marketing landing, production app, backend APIs,
+                            subscriptions, analytics, releases, admin tooling, and workflow support.
+                        </p>
+                        <ul class="project-highlights">
+                            <li data-i18n="projectFourHighlightOne">Frontend app for shootings, models, releases, uploads, dashboards, storyboards, portfolio, and pricing flows</li>
+                            <li data-i18n="projectFourHighlightTwo">Backend with Express, Sequelize, MySQL, JWT auth, Stripe, cron jobs, legal seeding, and AI-assisted guidance</li>
+                            <li data-i18n="projectFourHighlightThree">Dedicated admin panel for plans, users, alerts, legal content, libraries, revenue, and operational oversight</li>
+                            <li data-i18n="projectFourHighlightFour">Separate conversion landing focused on stock photographers, trust, SEO, accessibility, and performance improvements</li>
+                        </ul>
+                        <div class="stack-list">
+                            <span>Angular</span>
+                            <span>Node.js</span>
+                            <span>Express</span>
+                            <span>Sequelize</span>
+                            <span>MySQL</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://www.stockfy.co/" target="_blank" rel="noreferrer noopener">https://www.stockfy.co/</a>
+                        </div>
+                    </article>
+
+                    <article class="project-card reveal reveal-delay-1" data-status="in-progress">
+                        <div class="project-topline">
+                            <p class="project-tag" data-i18n="projectFiveTag">In progress · Travel platform</p>
+                            <span class="project-version">2026</span>
+                        </div>
+                        <h3 data-i18n="projectFiveTitle">JourneyBook</h3>
+                        <p class="project-summary" data-i18n="projectFiveSummary">
+                            Full-stack travel planning and storytelling app that turns trips into public stories, free travel PDFs,
+                            and a guided album-builder flow for printed books.
+                        </p>
+                        <ul class="project-highlights">
+                            <li data-i18n="projectFiveHighlightOne">Trip planning, trip days, memories, maps, and public story sharing in one product loop</li>
+                            <li data-i18n="projectFiveHighlightTwo">Free Travel PDF export plus a guided Album Builder oriented to real print fulfillment</li>
+                            <li data-i18n="projectFiveHighlightThree">Angular frontend with bilingual EN/ES foundations and Node.js/Express backend on MySQL</li>
+                            <li data-i18n="projectFiveHighlightFour">Production deployment on Vercel, Render, Aiven, and Cloudinary with documented go-live checks</li>
+                        </ul>
+                        <div class="stack-list">
+                            <span>Angular 17</span>
+                            <span>Node.js</span>
+                            <span>Express 5</span>
+                            <span>Sequelize</span>
+                            <span>MySQL</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://www.thejourneybook.app/" target="_blank" rel="noreferrer noopener">https://www.thejourneybook.app/</a>
+                        </div>
+                    </article>
+
+                    <article class="project-card reveal reveal-delay-2" data-status="released">
+                        <div class="project-topline">
+                            <p class="project-tag" data-i18n="projectTwoTag">Released · Public repo</p>
+                            <span class="project-version">v2.9.9.13</span>
+                        </div>
+                        <h3 data-i18n="projectTwoTitle">RF Planner</h3>
+                        <p class="project-summary" data-i18n="projectTwoSummary">
+                            Strategic planning and personal execution app for web and Android, built around projects, tasks,
+                            Gantt, schedules, notes, time tracking, and multi-device synchronization.
+                        </p>
+                        <ul class="project-highlights">
+                            <li data-i18n="projectTwoHighlightOne">Strategic planning, operational Kanban, schedules, notes, and personal tracking in one workflow</li>
+                            <li data-i18n="projectTwoHighlightTwo">Supabase-backed sync architecture combined with local-first persistence and release documentation</li>
+                            <li data-i18n="projectTwoHighlightThree">Web plus Android delivery with Capacitor, multilingual UI, and QA/release discipline</li>
+                            <li data-i18n="projectTwoHighlightFour">DEV tooling, legal content management, and persistence verification plans inside the product lifecycle</li>
+                        </ul>
+                        <div class="stack-list">
+                            <span>React 19</span>
+                            <span>Vite</span>
+                            <span>Supabase</span>
+                            <span>Capacitor</span>
+                            <span>LocalStorage</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://www.rfplanner.app/" target="_blank" rel="noreferrer noopener">https://www.rfplanner.app/</a>
+                        </div>
+                    </article>
+
+                    <article class="project-card reveal" data-status="released">
+                        <div class="project-topline">
+                            <p class="project-tag" data-i18n="projectOneTag">Released · Private source</p>
+                            <span class="project-version">v0.1.0</span>
+                        </div>
+                        <h3>RF Travel Planner</h3>
+                        <p class="project-summary" data-i18n="projectOneSummary">
+                            Collaborative trip planning web app with itinerary management, group budgeting, settlement flows,
+                            document handling, and installable PWA support.
+                        </p>
+                        <ul class="project-highlights">
+                            <li data-i18n="projectOneHighlightOne">Organizer and member collaboration with invitations and role-aware trip flows</li>
+                            <li data-i18n="projectOneHighlightTwo">Group finance tooling with shared pot, pending payments, settlement, and analytics</li>
+                            <li data-i18n="projectOneHighlightThree">Trip documents, in-app preview, PDF export, and mobile-first production refinements</li>
+                            <li data-i18n="projectOneHighlightFour">PWA support with manifest, icons, service worker, and offline fallback</li>
+                        </ul>
+                        <div class="stack-list">
+                            <span>Next.js</span>
+                            <span>React</span>
+                            <span>Supabase</span>
+                            <span>CSS Modules</span>
+                            <span>Vercel</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://rf-travel-planner.vercel.app/login" target="_blank" rel="noreferrer noopener">https://rf-travel-planner.vercel.app/login</a>
+                        </div>
+                    </article>
+
+                    <article class="project-card reveal reveal-delay-1" data-status="released">
+                        <div class="project-topline">
+                            <p class="project-tag" data-i18n="projectThreeTag">Released · Public repo</p>
+                            <span class="project-version">v1.0.0</span>
+                        </div>
+                        <h3 data-i18n="projectThreeTitle">Verge Landing Page</h3>
+                        <p class="project-summary" data-i18n="projectThreeSummary">
+                            Angular landing page template for SaaS and digital products, designed around modular sections,
+                            SEO support, SSR readiness, and polished conversion-focused presentation.
+                        </p>
+                        <ul class="project-highlights">
+                            <li data-i18n="projectThreeHighlightOne">Standalone Angular architecture with reusable hero, pricing, products, testimonials, FAQ, and legal pages</li>
+                            <li data-i18n="projectThreeHighlightTwo">Responsive marketing UI with AOS motion, pricing toggle, smooth anchor navigation, and SEO route metadata</li>
+                            <li data-i18n="projectThreeHighlightThree">SSR-ready setup with Angular Universal plus a public Vercel demo for quick validation</li>
+                        </ul>
+                        <div class="stack-list">
+                            <span>Angular 19</span>
+                            <span>Bootstrap 5</span>
+                            <span>AOS</span>
+                            <span>SSR</span>
+                            <span>Vercel</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://verge-landing-page-virid.vercel.app/" target="_blank" rel="noreferrer noopener">https://verge-landing-page-virid.vercel.app/</a>
+                        </div>
+                    </article>
+
+                    <article class="project-card reveal reveal-delay-2" data-status="in-progress">
+                        <div class="project-topline">
+                            <p class="project-tag" data-i18n="projectSixTag">In progress · Route platform</p>
+                            <span class="project-version">MVP</span>
+                        </div>
+                        <h3 data-i18n="projectSixTitle">Mototrive</h3>
+                        <p class="project-summary" data-i18n="projectSixSummary">
+                            Premium route discovery and route creation platform for motorcyclists, designed around public discovery,
+                            saved routes, social actions, onboarding, and future monetization layers.
+                        </p>
+                        <ul class="project-highlights">
+                            <li data-i18n="projectSixHighlightOne">Public landing, pricing flow, responsive app shell, and English-first UI prepared for growth</li>
+                            <li data-i18n="projectSixHighlightTwo">Route discovery with filters, saved routes, likes, comments, and detailed route experiences</li>
+                            <li data-i18n="projectSixHighlightThree">JWT auth, Google sign-in, onboarding, profile bootstrap, and modular backend by domain</li>
+                            <li data-i18n="projectSixHighlightFour">MapLibre roadmap, GPX pipeline preparation, freemium model, and production-oriented deployment setup</li>
+                        </ul>
+                        <div class="stack-list">
+                            <span>Angular 17</span>
+                            <span>Node.js</span>
+                            <span>Express</span>
+                            <span>TypeScript</span>
+                            <span>MySQL</span>
+                        </div>
+                    </article>
+
+                    <article class="project-card reveal" data-status="in-progress">
+                        <div class="project-topline">
+                            <p class="project-tag" data-i18n="projectSevenTag">In progress · EdTech platform</p>
+                            <span class="project-version">MVP</span>
+                        </div>
+                        <h3 data-i18n="projectSevenTitle">Nautictest</h3>
+                        <p class="project-summary" data-i18n="projectSevenSummary">
+                            Exam preparation platform for nautical licenses with student and admin areas, automatic correction,
+                            theory modules, and future multi-country and multi-language support.
+                        </p>
+                        <ul class="project-highlights">
+                            <li data-i18n="projectSevenHighlightOne">Student flows for registration, login, mock exams, results, progress, and theory access</li>
+                            <li data-i18n="projectSevenHighlightTwo">Admin architecture for questions, exams, theory, exam calls, users, and content governance</li>
+                            <li data-i18n="projectSevenHighlightThree">NestJS-ready backend model with JWT, refresh tokens, roles, permissions, and strict validation</li>
+                            <li data-i18n="projectSevenHighlightFour">Database design prepared for question bank snapshots, exam history, licenses, countries, and languages</li>
+                        </ul>
+                        <div class="stack-list">
+                            <span>Angular</span>
+                            <span>NestJS</span>
+                            <span>Node.js</span>
+                            <span>MySQL</span>
+                            <span>Prisma</span>
+                        </div>
+                    </article>
+
+                    <article class="project-card reveal reveal-delay-1" data-status="in-progress">
+                        <div class="project-topline">
+                            <p class="project-tag" data-i18n="projectEightTag">In progress · Association platform</p>
+                            <span class="project-version">v0.1.0</span>
+                        </div>
+                        <h3 data-i18n="projectEightTitle">AFJO</h3>
+                        <p class="project-summary" data-i18n="projectEightSummary">
+                            Modular digital platform for a photography association, combining public site, member area,
+                            content management, galleries, events, publications, and admin workflows.
+                        </p>
+                        <ul class="project-highlights">
+                            <li data-i18n="projectEightHighlightOne">Public content architecture for pages, news, agenda, contests, publications, projects, and FAQs</li>
+                            <li data-i18n="projectEightHighlightTwo">Private member and admin areas planned as a real CMS instead of a technical back office</li>
+                            <li data-i18n="projectEightHighlightThree">Angular plus NestJS foundation with mobile-first design direction and Bootstrap-backed design system</li>
+                            <li data-i18n="projectEightHighlightFour">Data model prepared for roles, galleries, documents, registrations, photographers, and scalable media management</li>
+                        </ul>
+                        <div class="stack-list">
+                            <span>Angular</span>
+                            <span>NestJS</span>
+                            <span>Bootstrap 5</span>
+                            <span>Prisma</span>
+                            <span>MySQL</span>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <section class="section gallery-section" id="gallery">
+                <div class="section-heading reveal">
+                    <div>
+                        <p class="section-kicker" data-i18n="galleryKicker">Visual proof</p>
+                        <h2 data-i18n="galleryTitle">Screens, flows, and product snapshots</h2>
+                    </div>
+                    <p class="section-aside" data-i18n="galleryAside">A selection of real captures from the products featured in this portfolio.</p>
+                </div>
+                <div class="gallery-grid">
+                    <figure class="gallery-card">
+                        <img src="assets/travel planner - activities.png" alt="Travel planner activities screen with map" data-i18n-alt="galleryImageOneAlt">
+                        <figcaption>
+                            <strong data-i18n="galleryCardOneTitle">RF Travel Planner activities</strong>
+                            <span data-i18n="galleryCardOneText">Real trip view combining scheduled activities with mapped context and shared planning.</span>
+                        </figcaption>
+                    </figure>
+                    <figure class="gallery-card">
+                        <img src="assets/rf planner - dashboard.png" alt="RF Planner dashboard screen" data-i18n-alt="galleryImageTwoAlt">
+                        <figcaption>
+                            <strong data-i18n="galleryCardTwoTitle">RF Planner dashboard</strong>
+                            <span data-i18n="galleryCardTwoText">Daily execution view with focus metrics, weekly review, and practical personal planning signals.</span>
+                        </figcaption>
+                    </figure>
+                    <figure class="gallery-card">
+                        <img src="assets/stockfy - dashboard.png" alt="Stockfy dashboard screen" data-i18n-alt="galleryImageThreeAlt">
+                        <figcaption>
+                            <strong data-i18n="galleryCardThreeTitle">Stockfy operational dashboard</strong>
+                            <span data-i18n="galleryCardThreeText">Operational surface showing jobs, uploads, sales, and workflow structure inside the product.</span>
+                        </figcaption>
+                    </figure>
+                    <figure class="gallery-card gallery-card--journeybook">
+                        <img src="assets/JourneyBook - landing.png" alt="JourneyBook landing screen" data-i18n-alt="galleryImageFourAlt">
+                        <figcaption>
+                            <strong data-i18n="galleryCardFourTitle">JourneyBook landing</strong>
+                            <span data-i18n="galleryCardFourText">Editorial entry point positioning the product around stories, PDFs, and printed books.</span>
+                        </figcaption>
+                    </figure>
+                    <figure class="gallery-card gallery-card--verge">
+                        <img src="assets/verge landind - demo.png" alt="Verge landing screen" data-i18n-alt="galleryImageFiveAlt">
+                        <figcaption>
+                            <strong data-i18n="galleryCardFiveTitle">Verge hero section</strong>
+                            <span data-i18n="galleryCardFiveText">Public-facing hero section designed for conversion clarity, product framing, and a clean SaaS presentation.</span>
+                        </figcaption>
+                    </figure>
+                </div>
+            </section>
+
+            <section class="section split-section" id="approach">
+                <div class="reveal">
+                    <p class="section-kicker" data-i18n="approachKicker">Approach</p>
+                    <h2 data-i18n="approachTitle">What this portfolio communicates</h2>
+                </div>
+                <div class="approach-grid">
+                    <article class="info-card reveal">
+                        <h3 data-i18n="approachCardOneTitle">Product overview</h3>
+                        <p data-i18n="approachCardOneText">Clear explanation of what the application does, who it serves, and why it matters.</p>
+                    </article>
+                    <article class="info-card reveal reveal-delay-1">
+                        <h3 data-i18n="approachCardTwoTitle">Technical proof</h3>
+                        <p data-i18n="approachCardTwoText">Concrete implementation highlights that show engineering depth without leaking private code.</p>
+                    </article>
+                    <article class="info-card reveal reveal-delay-2">
+                        <h3 data-i18n="approachCardThreeTitle">Release signals</h3>
+                        <p data-i18n="approachCardThreeText">Live demos, version milestones, screenshots, and quality improvements that make the work credible.</p>
+                    </article>
+                </div>
+            </section>
+
+            <section class="section experience-section" id="experience">
+                <div class="section-heading reveal">
+                    <div>
+                        <p class="section-kicker" data-i18n="experienceKicker">Experience</p>
+                        <h2 data-i18n="experienceTitle">How I typically contribute</h2>
+                    </div>
+                    <p class="section-aside" data-i18n="experienceAside">A capability timeline you can keep generic or replace with roles, clients, and years.</p>
+                </div>
+                <div class="experience-grid">
+                    <article class="experience-card reveal">
+                        <div class="experience-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" role="presentation"><path d="M12 4a7 7 0 0 1 7 7c0 4.1-3.4 8.2-7 9-3.6-.8-7-4.9-7-9a7 7 0 0 1 7-7zm0 2a5 5 0 0 0-5 5c0 2.9 2.5 6.2 5 6.9 2.5-.7 5-4 5-6.9a5 5 0 0 0-5-5z"/></svg>
+                        </div>
+                        <div>
+                            <p class="experience-stage" data-i18n="experienceStageOne">Discovery and product framing</p>
+                            <h3 data-i18n="experienceCardOneTitle">Translate needs into a usable roadmap</h3>
+                            <p data-i18n="experienceCardOneText">I define the product shape, identify the critical flows, and prioritize what should reach production first.</p>
+                        </div>
+                    </article>
+                    <article class="experience-card reveal reveal-delay-1">
+                        <div class="experience-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" role="presentation"><path d="M4 5h16v11H4zm2 2v7h12V7zm-1 11h14v2H5z"/></svg>
+                        </div>
+                        <div>
+                            <p class="experience-stage" data-i18n="experienceStageTwo">Frontend systems and UI delivery</p>
+                            <h3 data-i18n="experienceCardTwoTitle">Build interfaces that survive real use</h3>
+                            <p data-i18n="experienceCardTwoText">Responsive layouts, edge-case handling, mobile refinements, and product details that make the app feel finished.</p>
+                        </div>
+                    </article>
+                    <article class="experience-card reveal reveal-delay-2">
+                        <div class="experience-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" role="presentation"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9zm0 2.3L6 8.4v7.2l6 3.4 6-3.4V8.4zm-1 3.2h2v4h-2zm0 5.2h2v2h-2z"/></svg>
+                        </div>
+                        <div>
+                            <p class="experience-stage" data-i18n="experienceStageThree">Integration and release hardening</p>
+                            <h3 data-i18n="experienceCardThreeTitle">Connect backend flows and ship responsibly</h3>
+                            <p data-i18n="experienceCardThreeText">Authentication, permissions, persisted states, deployment readiness, and pragmatic release-quality fixes.</p>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <section class="section tech-section">
+                <div class="section-heading reveal">
+                    <div>
+                        <p class="section-kicker" data-i18n="techKicker">Core stack</p>
+                        <h2 data-i18n="techTitle">Tools I work with most</h2>
+                    </div>
+                </div>
+                <div class="marquee" aria-label="Technology list">
+                    <div class="marquee-track">
+                        <span>Next.js</span>
+                        <span>React</span>
+                        <span>TypeScript</span>
+                        <span>Supabase</span>
+                        <span>CSS Modules</span>
+                        <span>Vercel</span>
+                        <span>Responsive UI</span>
+                        <span>PWA</span>
+                        <span data-i18n="techDelivery">Product Delivery</span>
+                        <span>Next.js</span>
+                        <span>React</span>
+                        <span>TypeScript</span>
+                        <span>Supabase</span>
+                        <span>CSS Modules</span>
+                        <span>Vercel</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section contact-section" id="contact">
+                <div class="contact-copy reveal">
+                    <p class="section-kicker" data-i18n="contactKicker">Contact</p>
+                    <h2 data-i18n="contactTitle">Interested in the work?</h2>
+                    <p data-i18n="contactText">
+                        Route people here to your public profiles, your email, LinkedIn, or a short intake form.
+                        If a repository is private, the conversation can still move forward based on the evidence shown above.
+                    </p>
+                </div>
+                <div class="contact-card reveal reveal-delay-1">
+                    <a class="contact-link" href="mailto:infowebs.rafa@gmail.com">infowebs.rafa@gmail.com</a>
+                    <button
+                        class="copy-button"
+                        type="button"
+                        data-copy-en="infowebs.rafa@gmail.com"
+                        data-copy-es="infowebs.rafa@gmail.com"
+                        data-i18n="copyButton"
+                    >
+                        Copy email
+                    </button>
+                    <p class="contact-note" data-i18n="contactNote">Direct email for collaborations, freelance work, or product discussions.</p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <button class="scroll-top-button" type="button" aria-label="Back to top">
+        <svg viewBox="0 0 24 24" role="presentation" aria-hidden="true"><path d="M12 5.5l-7 7 1.4 1.4L11 9.3V19h2V9.3l4.6 4.6 1.4-1.4z"/></svg>
+    </button>
+
+    <script src="script.js"></script>
+</body>
+</html>
