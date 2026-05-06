@@ -470,51 +470,52 @@ h3 {
 
 .mobile-composition {
     position: relative;
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    align-items: end;
-    gap: 0;
-    min-height: 360px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    min-height: 270px;
     margin-bottom: 14px;
-    padding: 20px 12px 8px;
+    padding: 24px 12px 0;
     border-radius: 22px;
     border: 1px solid var(--line-strong);
+    overflow: hidden;
     background: radial-gradient(circle at top, rgba(255, 249, 242, 0.95), rgba(228, 215, 193, 0.92));
 }
 
 .mobile-composition img {
-    width: 100%;
-    max-width: 150px;
-    justify-self: center;
+    width: clamp(96px, 9.4vw, 132px);
     margin-bottom: 0;
     aspect-ratio: 9 / 19;
     object-fit: cover;
     padding: 0;
-    border-radius: 22px;
+    border-radius: 0;
     box-shadow: 0 20px 34px rgba(31, 26, 20, 0.18);
     background: #f3eadb;
 }
 
 .mobile-composition img:nth-child(1) {
-    transform: rotate(-7deg) translateY(14px);
+    transform: rotate(-7deg) translateY(12px);
+    margin-right: -14px;
 }
 
 .mobile-composition img:nth-child(2) {
     position: relative;
     z-index: 1;
-    max-width: 164px;
+    width: clamp(108px, 10.4vw, 146px);
+    transform: translateY(4px);
 }
 
 .mobile-composition img:nth-child(3) {
-    transform: rotate(7deg) translateY(14px);
+    transform: rotate(7deg) translateY(12px);
+    margin-left: -14px;
 }
 
 .mobile-composition--travel img:nth-child(1) {
-    transform: rotate(-6deg) translateY(12px);
+    transform: rotate(-6deg) translateY(10px);
 }
 
 .mobile-composition--travel img:nth-child(3) {
-    transform: rotate(6deg) translateY(12px);
+    transform: rotate(6deg) translateY(10px);
 }
 
 .gallery-card figcaption {
@@ -759,16 +760,24 @@ h3 {
 
 @media (max-width: 720px) {
     .mobile-composition {
-        min-height: 300px;
-        padding: 16px 8px 6px;
+        min-height: 232px;
+        padding: 18px 6px 0;
     }
 
     .mobile-composition img {
-        max-width: 110px;
-        border-radius: 18px;
+        width: clamp(82px, 27vw, 108px);
+        border-radius: 0;
+    }
+
+    .mobile-composition img:nth-child(1) {
+        margin-right: -10px;
     }
 
     .mobile-composition img:nth-child(2) {
-        max-width: 120px;
+        width: clamp(92px, 30vw, 118px);
+    }
+
+    .mobile-composition img:nth-child(3) {
+        margin-left: -10px;
     }
 }
