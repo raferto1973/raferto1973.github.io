@@ -13,13 +13,13 @@ This portfolio already includes:
 
 ## Live URLs
 
-- Site: https://raferto1973.github.io/
-- Sitemap: https://raferto1973.github.io/sitemap.xml
-- Robots: https://raferto1973.github.io/robots.txt
+- Site: <https://raferto1973.github.io/>
+- Sitemap: <https://raferto1973.github.io/sitemap.xml>
+- Robots: <https://raferto1973.github.io/robots.txt>
 
 ## Google Search Console
 
-1. Go to https://search.google.com/search-console
+1. Go to <https://search.google.com/search-console>
 2. Click `Add property`
 3. Use the `URL prefix` option with `https://raferto1973.github.io/`
 4. Choose a verification method:
@@ -31,7 +31,7 @@ This portfolio already includes:
 
 ## Bing Webmaster Tools
 
-1. Go to https://www.bing.com/webmasters
+1. Go to <https://www.bing.com/webmasters>
 2. Add site `https://raferto1973.github.io/`
 3. Verify ownership with:
    - XML file upload, or
