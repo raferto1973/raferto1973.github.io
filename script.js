@@ -321,6 +321,11 @@ const revealItems = document.querySelectorAll(".reveal");
 const copyButton = document.querySelector(".copy-button");
 const langButtons = document.querySelectorAll(".lang-button");
 const metaDescription = document.querySelector('meta[name="description"]');
+const ogTitle = document.querySelector('meta[property="og:title"]');
+const ogDescription = document.querySelector('meta[property="og:description"]');
+const ogLocale = document.querySelector('meta[property="og:locale"]');
+const twitterTitle = document.querySelector('meta[name="twitter:title"]');
+const twitterDescription = document.querySelector('meta[name="twitter:description"]');
 const scrollTopButton = document.querySelector(".scroll-top-button");
 
 function applyTranslations(lang) {
@@ -331,6 +336,26 @@ function applyTranslations(lang) {
 
     if (metaDescription) {
         metaDescription.setAttribute("content", content.pageDescription);
+    }
+
+    if (ogTitle) {
+        ogTitle.setAttribute("content", content.pageTitle);
+    }
+
+    if (ogDescription) {
+        ogDescription.setAttribute("content", content.pageDescription);
+    }
+
+    if (ogLocale) {
+        ogLocale.setAttribute("content", lang === "es" ? "es_ES" : "en_US");
+    }
+
+    if (twitterTitle) {
+        twitterTitle.setAttribute("content", content.pageTitle);
+    }
+
+    if (twitterDescription) {
+        twitterDescription.setAttribute("content", content.pageDescription);
     }
 
     document.querySelectorAll("[data-i18n]").forEach((element) => {

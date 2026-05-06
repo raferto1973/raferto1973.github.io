@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://raferto1973.github.io/sitemap.xml

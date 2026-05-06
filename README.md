@@ -5,6 +5,8 @@ Public portfolio site for Rafa Fernandez, focused on product-oriented web work, 
 ## Live Site
 
 - Portfolio: <https://raferto1973.github.io/>
+- Sitemap: <https://raferto1973.github.io/sitemap.xml>
+- Robots: <https://raferto1973.github.io/robots.txt>
 
 ## Highlights
 
@@ -40,3 +42,5 @@ Open `index.html` directly in a browser, or serve the folder with any static fil
 ## Notes
 
 The portfolio is intentionally curated to show product value, delivery quality, and technical direction while keeping sensitive implementation details private where appropriate.
+
+SEO-related setup notes are documented in `SEO_SETUP.md`.
