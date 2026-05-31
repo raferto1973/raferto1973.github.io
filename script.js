@@ -1,4 +1,4 @@
-const translations = {
+const defaultTranslations = {
     en: {
         pageTitle: "Rafa Fernandez | Product-Focused Web Builder",
         pageDescription: "Public portfolio for Rafa Fernandez featuring selected web products, technical highlights, and delivery experience without exposing private repositories.",
@@ -108,6 +108,13 @@ const translations = {
         projectTenHighlightTwo: "Multilingual frontend foundation prepared with Angular standalone architecture and translation support",
         projectTenHighlightThree: "Backend baseline aligned with catalog, checkout, and order-related flows for a local online store",
         projectTenHighlightFour: "Planned integrations for images, payments, and transactional email prepared from the initial product setup",
+        projectElevenTag: "In progress · Health platform",
+        projectElevenTitle: "LifePilot",
+        projectElevenSummary: "Mobile-first health application in active redefinition, evolving from a personal prototype into a local-first, installable, multilingual product with personalized goals and plans for any user.",
+        projectElevenHighlightOne: "React plus Tauri foundation already validated with native build support, installable delivery, and resilient local persistence",
+        projectElevenHighlightTwo: "Real navigation and editable flows for daily check-ins, health tracking, weekly review, activity logging, and personal plan management",
+        projectElevenHighlightThree: "SQLite runtime with browser fallback, import and restore tooling, and structured health records designed for continuity over time",
+        projectElevenHighlightFour: "Next product phase focused on generalized onboarding, user profiles, personalized goals, and a smarter plan engine ready for future AI support",
         galleryKicker: "Visual proof",
         galleryTitle: "Screens, flows, and product snapshots",
         galleryAside: "A selection of real captures from the products featured in this portfolio.",
@@ -279,6 +286,13 @@ const translations = {
         projectTenHighlightTwo: "Fundación frontend multilingüe preparada con Angular standalone y soporte de traducciones",
         projectTenHighlightThree: "Base backend alineada con catálogo, checkout y flujos de pedido para una tienda online local",
         projectTenHighlightFour: "Integraciones previstas para imágenes, pagos y correo transaccional contempladas desde la configuración inicial del producto",
+        projectElevenTag: "En curso · Plataforma de salud",
+        projectElevenTitle: "LifePilot",
+        projectElevenSummary: "Aplicación de salud mobile-first en redefinición activa, evolucionando desde un prototipo personal hacia un producto local-first, instalable y multiidioma con objetivos y planes personalizados para cualquier usuario.",
+        projectElevenHighlightOne: "Base React más Tauri ya validada con build nativo, entrega instalable y persistencia local robusta",
+        projectElevenHighlightTwo: "Navegación real y flujos editables para check-ins diarios, seguimiento de salud, revisión semanal, registro de actividad y gestión del plan personal",
+        projectElevenHighlightThree: "SQLite en runtime con fallback en navegador, herramientas de importación y restauración, y registros estructurados pensados para continuidad en el tiempo",
+        projectElevenHighlightFour: "Siguiente fase centrada en onboarding generalizado, perfiles de usuario, objetivos personalizados y un motor de plan más inteligente preparado para futuro soporte con IA",
         galleryKicker: "Prueba visual",
         galleryTitle: "Pantallas, flujos y capturas de producto",
         galleryAside: "Una selección de capturas reales de los productos destacados en este portfolio.",
@@ -343,9 +357,32 @@ const translations = {
     }
 };
 
+function mergeTranslations(baseTranslations, overrideTranslations) {
+    const merged = { ...baseTranslations };
+
+    if (!overrideTranslations || typeof overrideTranslations !== "object") {
+        return merged;
+    }
+
+    Object.keys(overrideTranslations).forEach((lang) => {
+        merged[lang] = {
+            ...(baseTranslations[lang] || {}),
+            ...(overrideTranslations[lang] || {})
+        };
+    });
+
+    return merged;
+}
+
+const contentConfig = window.portfolioContent || {};
+const translations = mergeTranslations(defaultTranslations, contentConfig.translations);
+
 const chips = document.querySelectorAll(".chip");
-const projectCards = document.querySelectorAll(".project-card");
-const revealItems = document.querySelectorAll(".reveal");
+const projectGrid = document.querySelector("#project-grid");
+const galleryGrid = document.querySelector("#gallery-grid");
+const experienceGrid = document.querySelector("#experience-grid");
+const techTrack = document.querySelector("#tech-track");
+const contactLink = document.querySelector(".contact-link");
 const copyButton = document.querySelector(".copy-button");
 const langButtons = document.querySelectorAll(".lang-button");
 const metaDescription = document.querySelector('meta[name="description"]');
@@ -355,9 +392,244 @@ const ogLocale = document.querySelector('meta[property="og:locale"]');
 const twitterTitle = document.querySelector('meta[name="twitter:title"]');
 const twitterDescription = document.querySelector('meta[name="twitter:description"]');
 const scrollTopButton = document.querySelector(".scroll-top-button");
+const portfolioProjects = Array.isArray(window.portfolioProjects) ? window.portfolioProjects : [];
+const galleryItems = Array.isArray(contentConfig.gallery) ? contentConfig.gallery : [];
+const experienceItems = Array.isArray(contentConfig.experience) ? contentConfig.experience : [];
+const techItems = Array.isArray(contentConfig.tech) ? contentConfig.tech : [];
+const contactConfig = contentConfig.contact || {};
+
+let currentLanguage = "en";
+let activeProjectFilter = "all";
+let revealObserver = null;
+
+function escapeHtml(value) {
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/\"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+}
+
+function getLocalizedProjectValue(project, lang, key, fallback = "") {
+    if (project?.[lang] && typeof project[lang][key] === "string") {
+        return project[lang][key];
+    }
+
+    if (project?.en && typeof project.en[key] === "string") {
+        return project.en[key];
+    }
+
+    return fallback;
+}
+
+function getLocalizedContentValue(item, lang, key, fallback = "") {
+    if (item?.[lang] && typeof item[lang][key] === "string") {
+        return item[lang][key];
+    }
+
+    if (item?.en && typeof item.en[key] === "string") {
+        return item.en[key];
+    }
+
+    return fallback;
+}
+
+function buildProjectCard(project, lang, index) {
+    const revealClasses = ["", " reveal-delay-1", " reveal-delay-2"];
+    const cardClass = `project-card reveal${revealClasses[index % revealClasses.length]}`;
+    const title = getLocalizedProjectValue(project, lang, "title", project.slug || "Project");
+    const tag = getLocalizedProjectValue(project, lang, "tag", "");
+    const summary = getLocalizedProjectValue(project, lang, "summary", "");
+    const highlights = Array.isArray(project?.[lang]?.highlights)
+        ? project[lang].highlights
+        : Array.isArray(project?.en?.highlights)
+            ? project.en.highlights
+            : [];
+    const stack = Array.isArray(project.stack) ? project.stack : [];
+    const link = typeof project.link === "string" ? project.link.trim() : "";
+
+    return `
+        <article class="${cardClass}" data-status="${escapeHtml(project.status || "in-progress")}">
+            <div class="project-topline">
+                <p class="project-tag">${escapeHtml(tag)}</p>
+                <span class="project-version">${escapeHtml(project.version || "")}</span>
+            </div>
+            <h3>${escapeHtml(title)}</h3>
+            <p class="project-summary">${escapeHtml(summary)}</p>
+            <ul class="project-highlights">
+                ${highlights.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}
+            </ul>
+            <div class="stack-list">
+                ${stack.map((item) => `<span>${escapeHtml(item)}</span>`).join("")}
+            </div>
+            ${link ? `<div class="project-links"><a href="${escapeHtml(link)}" target="_blank" rel="noreferrer noopener">${escapeHtml(link)}</a></div>` : ""}
+        </article>
+    `;
+}
+
+function applyProjectFilter() {
+    document.querySelectorAll(".project-card").forEach((card) => {
+        const matches = activeProjectFilter === "all" || card.dataset.status === activeProjectFilter;
+        card.classList.toggle("is-hidden", !matches);
+    });
+}
+
+function observeRevealItems(items) {
+    if (items.length === 0) {
+        return;
+    }
+
+    if (!("IntersectionObserver" in window)) {
+        items.forEach((item) => item.classList.add("is-visible"));
+        return;
+    }
+
+    if (!revealObserver) {
+        revealObserver = new IntersectionObserver(
+            (entries, observer) => {
+                entries.forEach((entry) => {
+                    if (!entry.isIntersecting) {
+                        return;
+                    }
+
+                    entry.target.classList.add("is-visible");
+                    observer.unobserve(entry.target);
+                });
+            },
+            { threshold: 0.18 }
+        );
+    }
+
+    items.forEach((item) => {
+        if (!item.classList.contains("is-visible")) {
+            revealObserver.observe(item);
+        }
+    });
+}
+
+function renderProjects(lang) {
+    if (!projectGrid) {
+        return;
+    }
+
+    if (portfolioProjects.length === 0) {
+        projectGrid.innerHTML = `<p class="project-summary">${escapeHtml(translations[lang]?.projectsEmpty || "No projects available yet.")}</p>`;
+        return;
+    }
+
+    projectGrid.innerHTML = portfolioProjects.map((project, index) => buildProjectCard(project, lang, index)).join("");
+    applyProjectFilter();
+    observeRevealItems(Array.from(projectGrid.querySelectorAll(".reveal")));
+}
+
+function renderGallery(lang) {
+    if (!galleryGrid) {
+        return;
+    }
+
+    galleryGrid.innerHTML = galleryItems.map((item) => {
+        const title = getLocalizedContentValue(item, lang, "title");
+        const text = getLocalizedContentValue(item, lang, "text");
+        const cardClasses = ["gallery-card", item.cardClass || ""].filter(Boolean).join(" ");
+
+        if (item.type === "mobile") {
+            const compositionLabel = getLocalizedContentValue(item, lang, "ariaLabel");
+            const images = Array.isArray(item.images) ? item.images : [];
+
+            return `
+                <figure class="${cardClasses}">
+                    <div class="${escapeHtml(item.compositionClass || "mobile-composition")}" aria-label="${escapeHtml(compositionLabel)}">
+                        ${images.map((image) => {
+                            const alt = lang === "es" ? image.esAlt : image.enAlt;
+                            return `<img src="${escapeHtml(image.src || "")}" alt="${escapeHtml(alt || "")}">`;
+                        }).join("")}
+                    </div>
+                    <figcaption>
+                        <strong>${escapeHtml(title)}</strong>
+                        <span>${escapeHtml(text)}</span>
+                    </figcaption>
+                </figure>
+            `;
+        }
+
+        const alt = getLocalizedContentValue(item, lang, "alt");
+
+        return `
+            <figure class="${cardClasses}">
+                <img src="${escapeHtml(item.imageSrc || "")}" alt="${escapeHtml(alt)}">
+                <figcaption>
+                    <strong>${escapeHtml(title)}</strong>
+                    <span>${escapeHtml(text)}</span>
+                </figcaption>
+            </figure>
+        `;
+    }).join("");
+}
+
+const experienceIcons = {
+    discovery: "<svg viewBox=\"0 0 24 24\" role=\"presentation\"><path d=\"M12 4a7 7 0 0 1 7 7c0 4.1-3.4 8.2-7 9-3.6-.8-7-4.9-7-9a7 7 0 0 1 7-7zm0 2a5 5 0 0 0-5 5c0 2.9 2.5 6.2 5 6.9 2.5-.7 5-4 5-6.9a5 5 0 0 0-5-5z\"/></svg>",
+    frontend: "<svg viewBox=\"0 0 24 24\" role=\"presentation\"><path d=\"M4 5h16v11H4zm2 2v7h12V7zm-1 11h14v2H5z\"/></svg>",
+    integration: "<svg viewBox=\"0 0 24 24\" role=\"presentation\"><path d=\"M12 3l8 4.5v9L12 21l-8-4.5v-9zm0 2.3L6 8.4v7.2l6 3.4 6-3.4V8.4zm-1 3.2h2v4h-2zm0 5.2h2v2h-2z\"/></svg>",
+    training: "<svg viewBox=\"0 0 24 24\" role=\"presentation\"><path d=\"M12 4 3 8.5 12 13l7-3.5V15h2V8.5zm-5 9v2.8c0 1.2 2.2 2.2 5 2.2s5-1 5-2.2V13l-5 2.5z\"/></svg>"
+};
+
+function renderExperience(lang) {
+    if (!experienceGrid) {
+        return;
+    }
+
+    const revealClasses = ["", " reveal-delay-1", " reveal-delay-2"];
+
+    experienceGrid.innerHTML = experienceItems.map((item, index) => {
+        const stage = getLocalizedContentValue(item, lang, "stage");
+        const title = getLocalizedContentValue(item, lang, "title");
+        const text = getLocalizedContentValue(item, lang, "text");
+        const icon = experienceIcons[item.icon] || experienceIcons.discovery;
+
+        return `
+            <article class="experience-card reveal${revealClasses[index % revealClasses.length]}">
+                <div class="experience-icon" aria-hidden="true">${icon}</div>
+                <div>
+                    <p class="experience-stage">${escapeHtml(stage)}</p>
+                    <h3>${escapeHtml(title)}</h3>
+                    <p>${escapeHtml(text)}</p>
+                </div>
+            </article>
+        `;
+    }).join("");
+
+    observeRevealItems(Array.from(experienceGrid.querySelectorAll(".reveal")));
+}
+
+function renderTech() {
+    if (!techTrack) {
+        return;
+    }
+
+    const repeated = [...techItems, ...techItems];
+    techTrack.innerHTML = repeated.map((item) => `<span>${escapeHtml(item)}</span>`).join("");
+}
+
+function applyContactContent() {
+    const email = typeof contactConfig.email === "string" && contactConfig.email.trim()
+        ? contactConfig.email.trim()
+        : "infowebs.rafa@gmail.com";
+
+    if (contactLink) {
+        contactLink.href = `mailto:${email}`;
+        contactLink.textContent = email;
+    }
+
+    if (copyButton) {
+        copyButton.dataset.copyEn = email;
+        copyButton.dataset.copyEs = email;
+    }
+}
 
 function applyTranslations(lang) {
     const content = translations[lang];
+    currentLanguage = lang;
 
     document.documentElement.lang = lang;
     document.title = content.pageTitle;
@@ -411,43 +683,28 @@ function applyTranslations(lang) {
     langButtons.forEach((button) => {
         button.classList.toggle("active", button.dataset.lang === lang);
     });
+
+    renderProjects(lang);
+    renderGallery(lang);
+    renderExperience(lang);
+    renderTech();
+    applyContactContent();
 }
 
 if (chips.length > 0) {
     chips.forEach((chip) => {
         chip.addEventListener("click", () => {
-            const filter = chip.dataset.filter;
+            activeProjectFilter = chip.dataset.filter || "all";
 
             chips.forEach((item) => item.classList.remove("active"));
             chip.classList.add("active");
 
-            projectCards.forEach((card) => {
-                const matches = filter === "all" || card.dataset.status === filter;
-                card.classList.toggle("is-hidden", !matches);
-            });
+            applyProjectFilter();
         });
     });
 }
 
-if ("IntersectionObserver" in window && revealItems.length > 0) {
-    const revealObserver = new IntersectionObserver(
-        (entries, observer) => {
-            entries.forEach((entry) => {
-                if (!entry.isIntersecting) {
-                    return;
-                }
-
-                entry.target.classList.add("is-visible");
-                observer.unobserve(entry.target);
-            });
-        },
-        { threshold: 0.18 }
-    );
-
-    revealItems.forEach((item) => revealObserver.observe(item));
-} else {
-    revealItems.forEach((item) => item.classList.add("is-visible"));
-}
+observeRevealItems(Array.from(document.querySelectorAll(".reveal")));
 
 if (copyButton) {
     copyButton.addEventListener("click", async () => {

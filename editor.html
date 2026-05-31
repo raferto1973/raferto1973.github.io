@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Content Editor</title>
+    <style>
+        :root {
+            color-scheme: light;
+            --bg: #f3efe6;
+            --panel: #fffdf8;
+            --line: #d8cdb9;
+            --text: #1f1a14;
+            --muted: #6d6255;
+            --accent: #9d3d16;
+            --accent-dark: #7e2f10;
+            --shadow: 0 18px 45px rgba(31, 26, 20, 0.08);
+            --radius: 18px;
+        }
+
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            font-family: Georgia, "Times New Roman", serif;
+            background: linear-gradient(180deg, #f6f1e8 0%, #efe5d2 100%);
+            color: var(--text);
+        }
+        .shell {
+            width: min(1720px, calc(100vw - 40px));
+            margin: 24px auto;
+            display: grid;
+            grid-template-columns: minmax(280px, 320px) minmax(0, 1fr);
+            gap: 20px;
+            align-items: start;
+        }
+        .panel {
+            background: var(--panel);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+        .sidebar, .editor { padding: 20px; }
+        .sidebar {
+            position: sticky;
+            top: 24px;
+            max-height: calc(100vh - 48px);
+            overflow: auto;
+        }
+        .editor { display: grid; gap: 18px; }
+        h1, h2, h3 { margin: 0; }
+        p { margin: 0; color: var(--muted); line-height: 1.5; }
+        .header, .stacked { display: grid; gap: 10px; }
+        .editor-topbar {
+            display: grid;
+            gap: 16px;
+            position: sticky;
+            top: 24px;
+            z-index: 5;
+            padding: 18px;
+            background: linear-gradient(180deg, #fffaf2 0%, #f7ecdd 100%);
+        }
+        .editor-topbar-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            gap: 16px;
+        }
+        .editor-topbar-copy {
+            display: grid;
+            gap: 6px;
+        }
+        .editor-topbar-copy p {
+            max-width: 720px;
+        }
+        .section-card {
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            background: #fff;
+            padding: 16px;
+            display: grid;
+            gap: 14px;
+        }
+        .section-card.hero-card {
+            background: linear-gradient(180deg, #fffaf2 0%, #f7ecdd 100%);
+        }
+        .meta-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
+        }
+        .meta-box {
+            border: 1px solid rgba(157, 61, 22, 0.16);
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.78);
+            padding: 12px;
+            display: grid;
+            gap: 4px;
+        }
+        .meta-label {
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--muted);
+        }
+        .meta-value {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+        .toolbar { display: flex; gap: 10px; flex-wrap: wrap; }
+        .actions {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
+        }
+        .sidebar-actions {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 8px;
+        }
+        .top-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+        button, input, select, textarea { font: inherit; }
+        button {
+            border: 1px solid var(--line);
+            background: #fff7ea;
+            color: var(--text);
+            border-radius: 14px;
+            padding: 11px 14px;
+            cursor: pointer;
+            transition: background-color 160ms ease, border-color 160ms ease, transform 160ms ease;
+        }
+        button.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+        button.primary:hover { background: var(--accent-dark); }
+        button:hover { transform: translateY(-1px); }
+        .sidebar-actions button {
+            padding: 8px 10px;
+            min-height: 0;
+            font-size: 0.92rem;
+            border-radius: 12px;
+        }
+        .list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: grid;
+            gap: 10px;
+            max-height: 220px;
+            overflow: auto;
+        }
+        .list-item {
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            padding: 12px;
+            background: #fff;
+            cursor: pointer;
+        }
+        .list-item.active { border-color: var(--accent); background: #fff2e3; }
+        .list-item strong, .list-item span { display: block; }
+        .list-item span { color: var(--muted); font-size: 0.92rem; margin-top: 4px; }
+        .editor-toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .tab-button.active {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+        }
+        .editor-panel {
+            display: none;
+        }
+        .editor-panel.is-active {
+            display: grid;
+            gap: 18px;
+        }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; }
+        .field, .field-group { display: grid; gap: 8px; }
+        .field-group { border: 1px solid var(--line); border-radius: 16px; padding: 16px; background: #fff; }
+        label { font-size: 0.92rem; color: var(--muted); }
+        input, select, textarea {
+            width: 100%;
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            padding: 11px 12px;
+            background: #fffdfa;
+            color: var(--text);
+        }
+        textarea { min-height: 96px; resize: vertical; }
+        .wide { grid-column: 1 / -1; }
+        code { background: #f7efe0; padding: 2px 6px; border-radius: 8px; }
+        .mini-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+        @media (max-width: 1320px) {
+            .shell { grid-template-columns: 1fr; }
+            .sidebar {
+                position: static;
+                max-height: none;
+            }
+            .editor-topbar {
+                position: static;
+            }
+            .editor-topbar-head {
+                grid-template-columns: 1fr;
+                display: grid;
+            }
+            .top-actions {
+                justify-content: flex-start;
+            }
+            .grid, .mini-grid, .actions, .meta-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="shell">
+        <aside class="panel sidebar stacked">
+            <div class="header">
+                <h1>Portfolio Editor</h1>
+                <p>Listas, contexto y selección rápida. La navegación principal y el guardado están arriba.</p>
+            </div>
+
+            <div class="section-card">
+                <div class="actions sidebar-actions">
+                    <button id="add-project" class="primary" type="button">Nuevo proyecto</button>
+                    <button id="duplicate-project" type="button">Duplicar</button>
+                    <button id="delete-project" type="button">Eliminar</button>
+                    <button id="move-project-up" type="button">Subir</button>
+                    <button id="move-project-down" type="button">Bajar</button>
+                </div>
+                <ul class="list" id="project-list"></ul>
+            </div>
+
+            <div class="section-card">
+                <div class="actions sidebar-actions">
+                    <button id="add-gallery" class="primary" type="button">Nueva imagen</button>
+                    <button id="delete-gallery" type="button">Eliminar</button>
+                    <button id="move-gallery-up" type="button">Subir</button>
+                    <button id="move-gallery-down" type="button">Bajar</button>
+                </div>
+                <ul class="list" id="gallery-list"></ul>
+            </div>
+
+            <div class="section-card">
+                <div class="actions sidebar-actions">
+                    <button id="add-experience" class="primary" type="button">Nueva tarjeta de experiencia</button>
+                    <button id="delete-experience" type="button">Eliminar</button>
+                    <button id="move-experience-up" type="button">Subir</button>
+                    <button id="move-experience-down" type="button">Bajar</button>
+                </div>
+                <ul class="list" id="experience-list"></ul>
+            </div>
+        </aside>
+
+        <main class="panel editor">
+            <div class="panel editor-topbar">
+                <div class="editor-topbar-head">
+                    <div class="editor-topbar-copy">
+                        <h2>Panel único de contenido</h2>
+                        <p>Edita proyectos, textos generales, galería, experiencia, stack y contacto desde un solo workspace. Guarda `projects-data.js` o `content-data.js` según el bloque que hayas tocado.</p>
+                    </div>
+                    <div class="top-actions">
+                        <button id="save-projects" class="primary" type="button">Guardar proyectos</button>
+                        <button id="save-content" class="primary" type="button">Guardar contenido</button>
+                        <button id="download-projects" type="button">Descargar proyectos</button>
+                        <button id="download-content" type="button">Descargar contenido</button>
+                    </div>
+                </div>
+                <div class="meta-grid">
+                    <div class="meta-box">
+                        <span class="meta-label">Proyectos</span>
+                        <strong class="meta-value" id="project-count">0</strong>
+                    </div>
+                    <div class="meta-box">
+                        <span class="meta-label">Galería</span>
+                        <strong class="meta-value" id="gallery-count">0</strong>
+                    </div>
+                    <div class="meta-box">
+                        <span class="meta-label">Experiencia</span>
+                        <strong class="meta-value" id="experience-count">0</strong>
+                    </div>
+                    <div class="meta-box">
+                        <span class="meta-label">Tecnologías</span>
+                        <strong class="meta-value" id="tech-count">0</strong>
+                    </div>
+                </div>
+                <div class="editor-toolbar">
+                    <button class="tab-button active" type="button" data-editor-tab="projects">Proyecto</button>
+                    <button class="tab-button" type="button" data-editor-tab="copy">Textos</button>
+                    <button class="tab-button" type="button" data-editor-tab="contact">Contacto y stack</button>
+                    <button class="tab-button" type="button" data-editor-tab="gallery">Galería</button>
+                    <button class="tab-button" type="button" data-editor-tab="experience">Experiencia</button>
+                </div>
+            </div>
+
+            <div class="editor-panel is-active" data-editor-panel="projects">
+            <div class="section-card">
+                <h2>Proyecto seleccionado</h2>
+                <div class="grid">
+                    <div class="field-group">
+                        <h3>Base</h3>
+                        <div class="field"><label for="slug">Slug</label><input id="slug" type="text"></div>
+                        <div class="field"><label for="status">Estado</label><select id="status"><option value="released">released</option><option value="in-progress">in-progress</option></select></div>
+                        <div class="field"><label for="version">Versión</label><input id="version" type="text"></div>
+                        <div class="field"><label for="link">URL pública</label><input id="link" type="url"></div>
+                        <div class="field wide"><label for="stack">Stack, uno por línea</label><textarea id="stack"></textarea></div>
+                    </div>
+                    <div class="field-group">
+                        <h3>English</h3>
+                        <div class="field"><label for="en-tag">Tag</label><input id="en-tag" type="text"></div>
+                        <div class="field"><label for="en-title">Title</label><input id="en-title" type="text"></div>
+                        <div class="field wide"><label for="en-summary">Summary</label><textarea id="en-summary"></textarea></div>
+                        <div class="field wide"><label for="en-highlights">Highlights, uno por línea</label><textarea id="en-highlights"></textarea></div>
+                    </div>
+                    <div class="field-group">
+                        <h3>Español</h3>
+                        <div class="field"><label for="es-tag">Tag</label><input id="es-tag" type="text"></div>
+                        <div class="field"><label for="es-title">Title</label><input id="es-title" type="text"></div>
+                        <div class="field wide"><label for="es-summary">Resumen</label><textarea id="es-summary"></textarea></div>
+                        <div class="field wide"><label for="es-highlights">Highlights ES, uno por línea</label><textarea id="es-highlights"></textarea></div>
+                    </div>
+                </div>
+            </div>
+
+            </div>
+
+            <div class="editor-panel" data-editor-panel="copy">
+            <div class="section-card">
+                <h2>Textos generales</h2>
+                <div class="grid">
+                    <div class="field-group">
+                        <h3>English copy</h3>
+                        <div class="field"><label for="en-page-title">Page title</label><input id="en-page-title" type="text"></div>
+                        <div class="field wide"><label for="en-page-description">Page description</label><textarea id="en-page-description"></textarea></div>
+                        <div class="mini-grid wide">
+                            <div class="field"><label for="en-nav-projects">Nav projects</label><input id="en-nav-projects" type="text"></div>
+                            <div class="field"><label for="en-nav-gallery">Nav gallery</label><input id="en-nav-gallery" type="text"></div>
+                            <div class="field"><label for="en-nav-experience">Nav experience</label><input id="en-nav-experience" type="text"></div>
+                        </div>
+                        <div class="field"><label for="en-nav-contact">Nav contact</label><input id="en-nav-contact" type="text"></div>
+                        <div class="field"><label for="en-hero-title">Hero title</label><input id="en-hero-title" type="text"></div>
+                        <div class="field wide"><label for="en-hero-text">Hero text</label><textarea id="en-hero-text"></textarea></div>
+                        <div class="field"><label for="en-hero-cta">Hero CTA</label><input id="en-hero-cta" type="text"></div>
+                        <div class="field"><label for="en-projects-kicker">Projects kicker</label><input id="en-projects-kicker" type="text"></div>
+                        <div class="field"><label for="en-projects-title">Projects title</label><input id="en-projects-title" type="text"></div>
+                        <div class="mini-grid wide">
+                            <div class="field"><label for="en-filter-all">Filter all</label><input id="en-filter-all" type="text"></div>
+                            <div class="field"><label for="en-filter-released">Filter released</label><input id="en-filter-released" type="text"></div>
+                            <div class="field"><label for="en-filter-progress">Filter in progress</label><input id="en-filter-progress" type="text"></div>
+                        </div>
+                        <div class="field"><label for="en-gallery-kicker">Gallery kicker</label><input id="en-gallery-kicker" type="text"></div>
+                        <div class="field"><label for="en-gallery-title">Gallery title</label><input id="en-gallery-title" type="text"></div>
+                        <div class="field wide"><label for="en-gallery-aside">Gallery aside</label><textarea id="en-gallery-aside"></textarea></div>
+                        <div class="field"><label for="en-experience-kicker">Experience kicker</label><input id="en-experience-kicker" type="text"></div>
+                        <div class="field"><label for="en-experience-title">Experience title</label><input id="en-experience-title" type="text"></div>
+                        <div class="field wide"><label for="en-experience-aside">Experience aside</label><textarea id="en-experience-aside"></textarea></div>
+                        <div class="field"><label for="en-tech-kicker">Tech kicker</label><input id="en-tech-kicker" type="text"></div>
+                        <div class="field"><label for="en-tech-title">Tech title</label><input id="en-tech-title" type="text"></div>
+                        <div class="field"><label for="en-contact-kicker">Contact kicker</label><input id="en-contact-kicker" type="text"></div>
+                        <div class="field"><label for="en-contact-title">Contact title</label><input id="en-contact-title" type="text"></div>
+                        <div class="field wide"><label for="en-contact-text">Contact text</label><textarea id="en-contact-text"></textarea></div>
+                        <div class="field"><label for="en-copy-button">Copy button</label><input id="en-copy-button" type="text"></div>
+                        <div class="field"><label for="en-copy-success">Copy success</label><input id="en-copy-success" type="text"></div>
+                        <div class="field"><label for="en-copy-error">Copy error</label><input id="en-copy-error" type="text"></div>
+                        <div class="field wide"><label for="en-contact-note">Contact note</label><textarea id="en-contact-note"></textarea></div>
+                    </div>
+                    <div class="field-group">
+                        <h3>Español</h3>
+                        <div class="field"><label for="es-page-title">Page title</label><input id="es-page-title" type="text"></div>
+                        <div class="field wide"><label for="es-page-description">Page description</label><textarea id="es-page-description"></textarea></div>
+                        <div class="mini-grid wide">
+                            <div class="field"><label for="es-nav-projects">Nav projects</label><input id="es-nav-projects" type="text"></div>
+                            <div class="field"><label for="es-nav-gallery">Nav gallery</label><input id="es-nav-gallery" type="text"></div>
+                            <div class="field"><label for="es-nav-experience">Nav experience</label><input id="es-nav-experience" type="text"></div>
+                        </div>
+                        <div class="field"><label for="es-nav-contact">Nav contact</label><input id="es-nav-contact" type="text"></div>
+                        <div class="field"><label for="es-hero-title">Hero title</label><input id="es-hero-title" type="text"></div>
+                        <div class="field wide"><label for="es-hero-text">Hero text</label><textarea id="es-hero-text"></textarea></div>
+                        <div class="field"><label for="es-hero-cta">Hero CTA</label><input id="es-hero-cta" type="text"></div>
+                        <div class="field"><label for="es-projects-kicker">Projects kicker</label><input id="es-projects-kicker" type="text"></div>
+                        <div class="field"><label for="es-projects-title">Projects title</label><input id="es-projects-title" type="text"></div>
+                        <div class="mini-grid wide">
+                            <div class="field"><label for="es-filter-all">Filter all</label><input id="es-filter-all" type="text"></div>
+                            <div class="field"><label for="es-filter-released">Filter released</label><input id="es-filter-released" type="text"></div>
+                            <div class="field"><label for="es-filter-progress">Filter in progress</label><input id="es-filter-progress" type="text"></div>
+                        </div>
+                        <div class="field"><label for="es-gallery-kicker">Gallery kicker</label><input id="es-gallery-kicker" type="text"></div>
+                        <div class="field"><label for="es-gallery-title">Gallery title</label><input id="es-gallery-title" type="text"></div>
+                        <div class="field wide"><label for="es-gallery-aside">Gallery aside</label><textarea id="es-gallery-aside"></textarea></div>
+                        <div class="field"><label for="es-experience-kicker">Experience kicker</label><input id="es-experience-kicker" type="text"></div>
+                        <div class="field"><label for="es-experience-title">Experience title</label><input id="es-experience-title" type="text"></div>
+                        <div class="field wide"><label for="es-experience-aside">Experience aside</label><textarea id="es-experience-aside"></textarea></div>
+                        <div class="field"><label for="es-tech-kicker">Tech kicker</label><input id="es-tech-kicker" type="text"></div>
+                        <div class="field"><label for="es-tech-title">Tech title</label><input id="es-tech-title" type="text"></div>
+                        <div class="field"><label for="es-contact-kicker">Contact kicker</label><input id="es-contact-kicker" type="text"></div>
+                        <div class="field"><label for="es-contact-title">Contact title</label><input id="es-contact-title" type="text"></div>
+                        <div class="field wide"><label for="es-contact-text">Contact text</label><textarea id="es-contact-text"></textarea></div>
+                        <div class="field"><label for="es-copy-button">Copy button</label><input id="es-copy-button" type="text"></div>
+                        <div class="field"><label for="es-copy-success">Copy success</label><input id="es-copy-success" type="text"></div>
+                        <div class="field"><label for="es-copy-error">Copy error</label><input id="es-copy-error" type="text"></div>
+                        <div class="field wide"><label for="es-contact-note">Contact note</label><textarea id="es-contact-note"></textarea></div>
+                    </div>
+                </div>
+            </div>
+
+            </div>
+
+            <div class="editor-panel" data-editor-panel="contact">
+            <div class="section-card">
+                <h2>Contacto y stack</h2>
+                <div class="grid">
+                    <div class="field-group">
+                        <div class="field"><label for="contact-email">Email</label><input id="contact-email" type="email"></div>
+                    </div>
+                    <div class="field-group">
+                        <div class="field wide"><label for="tech-items">Tecnologías, una por línea</label><textarea id="tech-items"></textarea></div>
+                    </div>
+                </div>
+            </div>
+
+            </div>
+
+            <div class="editor-panel" data-editor-panel="gallery">
+            <div class="section-card">
+                <h2>Galería seleccionada</h2>
+                <div class="grid">
+                    <div class="field-group">
+                        <h3>Base</h3>
+                        <div class="field"><label for="gallery-type">Tipo</label><select id="gallery-type"><option value="single">single</option><option value="mobile">mobile</option></select></div>
+                        <div class="field"><label for="gallery-card-class">Clase extra de tarjeta</label><input id="gallery-card-class" type="text"></div>
+                        <div class="field"><label for="gallery-image-src">Imagen única</label><input id="gallery-image-src" type="text"></div>
+                        <div class="field"><label for="gallery-composition-class">Clase de composición mobile</label><input id="gallery-composition-class" type="text"></div>
+                        <div class="field wide"><label for="gallery-mobile-images">Imágenes mobile, una por línea con formato: src|alt EN|alt ES</label><textarea id="gallery-mobile-images"></textarea></div>
+                    </div>
+                    <div class="field-group">
+                        <h3>English</h3>
+                        <div class="field"><label for="gallery-en-title">Title</label><input id="gallery-en-title" type="text"></div>
+                        <div class="field wide"><label for="gallery-en-text">Text</label><textarea id="gallery-en-text"></textarea></div>
+                        <div class="field"><label for="gallery-en-alt">Alt</label><input id="gallery-en-alt" type="text"></div>
+                        <div class="field"><label for="gallery-en-aria">Aria label</label><input id="gallery-en-aria" type="text"></div>
+                    </div>
+                    <div class="field-group">
+                        <h3>Español</h3>
+                        <div class="field"><label for="gallery-es-title">Title</label><input id="gallery-es-title" type="text"></div>
+                        <div class="field wide"><label for="gallery-es-text">Text</label><textarea id="gallery-es-text"></textarea></div>
+                        <div class="field"><label for="gallery-es-alt">Alt</label><input id="gallery-es-alt" type="text"></div>
+                        <div class="field"><label for="gallery-es-aria">Aria label</label><input id="gallery-es-aria" type="text"></div>
+                    </div>
+                </div>
+            </div>
+
+            </div>
+
+            <div class="editor-panel" data-editor-panel="experience">
+            <div class="section-card">
+                <h2>Experiencia seleccionada</h2>
+                <div class="grid">
+                    <div class="field-group">
+                        <h3>Base</h3>
+                        <div class="field"><label for="experience-icon">Icono</label><select id="experience-icon"><option value="discovery">discovery</option><option value="frontend">frontend</option><option value="integration">integration</option><option value="training">training</option></select></div>
+                    </div>
+                    <div class="field-group">
+                        <h3>English</h3>
+                        <div class="field"><label for="experience-en-stage">Stage</label><input id="experience-en-stage" type="text"></div>
+                        <div class="field"><label for="experience-en-title">Title</label><input id="experience-en-title" type="text"></div>
+                        <div class="field wide"><label for="experience-en-text">Text</label><textarea id="experience-en-text"></textarea></div>
+                    </div>
+                    <div class="field-group">
+                        <h3>Español</h3>
+                        <div class="field"><label for="experience-es-stage">Stage</label><input id="experience-es-stage" type="text"></div>
+                        <div class="field"><label for="experience-es-title">Title</label><input id="experience-es-title" type="text"></div>
+                        <div class="field wide"><label for="experience-es-text">Text</label><textarea id="experience-es-text"></textarea></div>
+                    </div>
+                </div>
+            </div>
+
+            </div>
+        </main>
+    </div>
+
+    <script src="content-data.js"></script>
+    <script src="projects-data.js"></script>
+    <script>
+        const projects = Array.isArray(window.portfolioProjects) ? structuredClone(window.portfolioProjects) : [];
+        const content = window.portfolioContent ? structuredClone(window.portfolioContent) : { translations: { en: {}, es: {} }, contact: { email: "" }, tech: [], gallery: [], experience: [] };
+
+        const elements = {
+            projectList: document.querySelector("#project-list"),
+            galleryList: document.querySelector("#gallery-list"),
+            experienceList: document.querySelector("#experience-list"),
+            saveProjects: document.querySelector("#save-projects"),
+            saveContent: document.querySelector("#save-content"),
+            downloadProjects: document.querySelector("#download-projects"),
+            downloadContent: document.querySelector("#download-content"),
+            addProject: document.querySelector("#add-project"),
+            duplicateProject: document.querySelector("#duplicate-project"),
+            deleteProject: document.querySelector("#delete-project"),
+            moveProjectUp: document.querySelector("#move-project-up"),
+            moveProjectDown: document.querySelector("#move-project-down"),
+            addGallery: document.querySelector("#add-gallery"),
+            deleteGallery: document.querySelector("#delete-gallery"),
+            moveGalleryUp: document.querySelector("#move-gallery-up"),
+            moveGalleryDown: document.querySelector("#move-gallery-down"),
+            addExperience: document.querySelector("#add-experience"),
+            deleteExperience: document.querySelector("#delete-experience"),
+            moveExperienceUp: document.querySelector("#move-experience-up"),
+            moveExperienceDown: document.querySelector("#move-experience-down"),
+            projectCount: document.querySelector("#project-count"),
+            galleryCount: document.querySelector("#gallery-count"),
+            experienceCount: document.querySelector("#experience-count"),
+            techCount: document.querySelector("#tech-count"),
+            slug: document.querySelector("#slug"),
+            status: document.querySelector("#status"),
+            version: document.querySelector("#version"),
+            link: document.querySelector("#link"),
+            stack: document.querySelector("#stack"),
+            enTag: document.querySelector("#en-tag"),
+            enTitle: document.querySelector("#en-title"),
+            enSummary: document.querySelector("#en-summary"),
+            enHighlights: document.querySelector("#en-highlights"),
+            esTag: document.querySelector("#es-tag"),
+            esTitle: document.querySelector("#es-title"),
+            esSummary: document.querySelector("#es-summary"),
+            esHighlights: document.querySelector("#es-highlights"),
+            enPageTitle: document.querySelector("#en-page-title"),
+            enPageDescription: document.querySelector("#en-page-description"),
+            enNavProjects: document.querySelector("#en-nav-projects"),
+            enNavGallery: document.querySelector("#en-nav-gallery"),
+            enNavExperience: document.querySelector("#en-nav-experience"),
+            enNavContact: document.querySelector("#en-nav-contact"),
+            enHeroTitle: document.querySelector("#en-hero-title"),
+            enHeroText: document.querySelector("#en-hero-text"),
+            enHeroCta: document.querySelector("#en-hero-cta"),
+            enProjectsKicker: document.querySelector("#en-projects-kicker"),
+            enProjectsTitle: document.querySelector("#en-projects-title"),
+            enFilterAll: document.querySelector("#en-filter-all"),
+            enFilterReleased: document.querySelector("#en-filter-released"),
+            enFilterProgress: document.querySelector("#en-filter-progress"),
+            enGalleryKicker: document.querySelector("#en-gallery-kicker"),
+            enGalleryTitle: document.querySelector("#en-gallery-title"),
+            enGalleryAside: document.querySelector("#en-gallery-aside"),
+            enExperienceKicker: document.querySelector("#en-experience-kicker"),
+            enExperienceTitle: document.querySelector("#en-experience-title"),
+            enExperienceAside: document.querySelector("#en-experience-aside"),
+            enTechKicker: document.querySelector("#en-tech-kicker"),
+            enTechTitle: document.querySelector("#en-tech-title"),
+            enContactKicker: document.querySelector("#en-contact-kicker"),
+            enContactTitle: document.querySelector("#en-contact-title"),
+            enContactText: document.querySelector("#en-contact-text"),
+            enCopyButton: document.querySelector("#en-copy-button"),
+            enCopySuccess: document.querySelector("#en-copy-success"),
+            enCopyError: document.querySelector("#en-copy-error"),
+            enContactNote: document.querySelector("#en-contact-note"),
+            esPageTitle: document.querySelector("#es-page-title"),
+            esPageDescription: document.querySelector("#es-page-description"),
+            esNavProjects: document.querySelector("#es-nav-projects"),
+            esNavGallery: document.querySelector("#es-nav-gallery"),
+            esNavExperience: document.querySelector("#es-nav-experience"),
+            esNavContact: document.querySelector("#es-nav-contact"),
+            esHeroTitle: document.querySelector("#es-hero-title"),
+            esHeroText: document.querySelector("#es-hero-text"),
+            esHeroCta: document.querySelector("#es-hero-cta"),
+            esProjectsKicker: document.querySelector("#es-projects-kicker"),
+            esProjectsTitle: document.querySelector("#es-projects-title"),
+            esFilterAll: document.querySelector("#es-filter-all"),
+            esFilterReleased: document.querySelector("#es-filter-released"),
+            esFilterProgress: document.querySelector("#es-filter-progress"),
+            esGalleryKicker: document.querySelector("#es-gallery-kicker"),
+            esGalleryTitle: document.querySelector("#es-gallery-title"),
+            esGalleryAside: document.querySelector("#es-gallery-aside"),
+            esExperienceKicker: document.querySelector("#es-experience-kicker"),
+            esExperienceTitle: document.querySelector("#es-experience-title"),
+            esExperienceAside: document.querySelector("#es-experience-aside"),
+            esTechKicker: document.querySelector("#es-tech-kicker"),
+            esTechTitle: document.querySelector("#es-tech-title"),
+            esContactKicker: document.querySelector("#es-contact-kicker"),
+            esContactTitle: document.querySelector("#es-contact-title"),
+            esContactText: document.querySelector("#es-contact-text"),
+            esCopyButton: document.querySelector("#es-copy-button"),
+            esCopySuccess: document.querySelector("#es-copy-success"),
+            esCopyError: document.querySelector("#es-copy-error"),
+            esContactNote: document.querySelector("#es-contact-note"),
+            contactEmail: document.querySelector("#contact-email"),
+            techItems: document.querySelector("#tech-items"),
+            galleryType: document.querySelector("#gallery-type"),
+            galleryCardClass: document.querySelector("#gallery-card-class"),
+            galleryImageSrc: document.querySelector("#gallery-image-src"),
+            galleryCompositionClass: document.querySelector("#gallery-composition-class"),
+            galleryMobileImages: document.querySelector("#gallery-mobile-images"),
+            galleryEnTitle: document.querySelector("#gallery-en-title"),
+            galleryEnText: document.querySelector("#gallery-en-text"),
+            galleryEnAlt: document.querySelector("#gallery-en-alt"),
+            galleryEnAria: document.querySelector("#gallery-en-aria"),
+            galleryEsTitle: document.querySelector("#gallery-es-title"),
+            galleryEsText: document.querySelector("#gallery-es-text"),
+            galleryEsAlt: document.querySelector("#gallery-es-alt"),
+            galleryEsAria: document.querySelector("#gallery-es-aria"),
+            experienceIcon: document.querySelector("#experience-icon"),
+            experienceEnStage: document.querySelector("#experience-en-stage"),
+            experienceEnTitle: document.querySelector("#experience-en-title"),
+            experienceEnText: document.querySelector("#experience-en-text"),
+            experienceEsStage: document.querySelector("#experience-es-stage"),
+            experienceEsTitle: document.querySelector("#experience-es-title"),
+            experienceEsText: document.querySelector("#experience-es-text")
+        };
+
+        let activeProjectIndex = 0;
+        let activeGalleryIndex = 0;
+        let activeExperienceIndex = 0;
+        let activeEditorPanel = "projects";
+
+        const tabButtons = Array.from(document.querySelectorAll("[data-editor-tab]"));
+        const editorPanels = Array.from(document.querySelectorAll("[data-editor-panel]"));
+
+        function asLines(value) {
+            return value.split("\n").map((item) => item.trim()).filter(Boolean);
+        }
+
+        function serializeProjects() {
+            return `window.portfolioProjects = ${JSON.stringify(projects, null, 4)};\n`;
+        }
+
+        function serializeContent() {
+            return `window.portfolioContent = ${JSON.stringify(content, null, 4)};\n`;
+        }
+
+        function downloadFile(fileName, value) {
+            const blob = new Blob([value], { type: "text/javascript;charset=utf-8" });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement("a");
+            link.href = url;
+            link.download = fileName;
+            link.click();
+            URL.revokeObjectURL(url);
+        }
+
+        async function saveFile(suggestedName, value) {
+            if (!window.showSaveFilePicker) {
+                downloadFile(suggestedName, value);
+                return;
+            }
+
+            const handle = await window.showSaveFilePicker({
+                suggestedName,
+                types: [{ description: "JavaScript data file", accept: { "text/javascript": [".js"] } }]
+            });
+            const writable = await handle.createWritable();
+            await writable.write(value);
+            await writable.close();
+        }
+
+        function createEmptyProject() {
+            return {
+                slug: "new-project",
+                status: "in-progress",
+                version: "MVP",
+                link: "",
+                stack: [],
+                en: { tag: "In progress · New platform", title: "New Project", summary: "Describe the product clearly.", highlights: ["First highlight"] },
+                es: { tag: "En curso · Nueva plataforma", title: "Nuevo Proyecto", summary: "Describe el producto con claridad.", highlights: ["Primer highlight"] }
+            };
+        }
+
+        function createEmptyGalleryItem() {
+            return {
+                type: "single",
+                cardClass: "",
+                imageSrc: "assets/example.png",
+                en: { alt: "Image alt", title: "Gallery title", text: "Gallery text", ariaLabel: "" },
+                es: { alt: "Alt de imagen", title: "Título galería", text: "Texto galería", ariaLabel: "" },
+                images: []
+            };
+        }
+
+        function createEmptyExperienceItem() {
+            return {
+                icon: "discovery",
+                en: { stage: "Stage", title: "Title", text: "Text" },
+                es: { stage: "Etapa", title: "Título", text: "Texto" }
+            };
+        }
+
+        function renderList(listElement, items, activeIndex, labelBuilder) {
+            listElement.innerHTML = "";
+            items.forEach((item, index) => {
+                const node = document.createElement("li");
+                node.className = `list-item${index === activeIndex ? " active" : ""}`;
+                node.innerHTML = labelBuilder(item);
+                node.addEventListener("click", () => {
+                    if (listElement === elements.projectList) activeProjectIndex = index;
+                    if (listElement === elements.galleryList) activeGalleryIndex = index;
+                    if (listElement === elements.experienceList) activeExperienceIndex = index;
+                    hydrateAll();
+                });
+                listElement.appendChild(node);
+            });
+        }
+
+        function applyEditorPanel(panelName) {
+            activeEditorPanel = panelName;
+            tabButtons.forEach((button) => {
+                button.classList.toggle("active", button.dataset.editorTab === panelName);
+            });
+            editorPanels.forEach((panel) => {
+                panel.classList.toggle("is-active", panel.dataset.editorPanel === panelName);
+            });
+        }
+
+        function updateSidebarMetrics() {
+            elements.projectCount.textContent = String(projects.length);
+            elements.galleryCount.textContent = String(content.gallery.length);
+            elements.experienceCount.textContent = String(content.experience.length);
+            elements.techCount.textContent = String(Array.isArray(content.tech) ? content.tech.length : 0);
+        }
+
+        function hydrateProject() {
+            const project = projects[activeProjectIndex];
+            if (!project) return;
+            elements.slug.value = project.slug || "";
+            elements.status.value = project.status || "in-progress";
+            elements.version.value = project.version || "";
+            elements.link.value = project.link || "";
+            elements.stack.value = Array.isArray(project.stack) ? project.stack.join("\n") : "";
+            elements.enTag.value = project.en?.tag || "";
+            elements.enTitle.value = project.en?.title || "";
+            elements.enSummary.value = project.en?.summary || "";
+            elements.enHighlights.value = Array.isArray(project.en?.highlights) ? project.en.highlights.join("\n") : "";
+            elements.esTag.value = project.es?.tag || "";
+            elements.esTitle.value = project.es?.title || "";
+            elements.esSummary.value = project.es?.summary || "";
+            elements.esHighlights.value = Array.isArray(project.es?.highlights) ? project.es.highlights.join("\n") : "";
+        }
+
+        function hydrateTranslations() {
+            const en = content.translations.en || {};
+            const es = content.translations.es || {};
+            const keyMap = {
+                enPageTitle: "pageTitle", enPageDescription: "pageDescription", enNavProjects: "navProjects", enNavGallery: "navGallery", enNavExperience: "navExperience", enNavContact: "navContact", enHeroTitle: "heroTitle", enHeroText: "heroText", enHeroCta: "heroPrimaryCta", enProjectsKicker: "projectsKicker", enProjectsTitle: "projectsTitle", enFilterAll: "filterAll", enFilterReleased: "filterReleased", enFilterProgress: "filterProgress", enGalleryKicker: "galleryKicker", enGalleryTitle: "galleryTitle", enGalleryAside: "galleryAside", enExperienceKicker: "experienceKicker", enExperienceTitle: "experienceTitle", enExperienceAside: "experienceAside", enTechKicker: "techKicker", enTechTitle: "techTitle", enContactKicker: "contactKicker", enContactTitle: "contactTitle", enContactText: "contactText", enCopyButton: "copyButton", enCopySuccess: "copySuccess", enCopyError: "copyError", enContactNote: "contactNote",
+                esPageTitle: "pageTitle", esPageDescription: "pageDescription", esNavProjects: "navProjects", esNavGallery: "navGallery", esNavExperience: "navExperience", esNavContact: "navContact", esHeroTitle: "heroTitle", esHeroText: "heroText", esHeroCta: "heroPrimaryCta", esProjectsKicker: "projectsKicker", esProjectsTitle: "projectsTitle", esFilterAll: "filterAll", esFilterReleased: "filterReleased", esFilterProgress: "filterProgress", esGalleryKicker: "galleryKicker", esGalleryTitle: "galleryTitle", esGalleryAside: "galleryAside", esExperienceKicker: "experienceKicker", esExperienceTitle: "experienceTitle", esExperienceAside: "experienceAside", esTechKicker: "techKicker", esTechTitle: "techTitle", esContactKicker: "contactKicker", esContactTitle: "contactTitle", esContactText: "contactText", esCopyButton: "copyButton", esCopySuccess: "copySuccess", esCopyError: "copyError", esContactNote: "contactNote"
+            };
+
+            Object.entries(keyMap).forEach(([elementKey, translationKey]) => {
+                const target = elementKey.startsWith("en") ? en : es;
+                elements[elementKey].value = target[translationKey] || "";
+            });
+
+            elements.contactEmail.value = content.contact?.email || "";
+            elements.techItems.value = Array.isArray(content.tech) ? content.tech.join("\n") : "";
+        }
+
+        function hydrateGallery() {
+            const item = content.gallery[activeGalleryIndex];
+            if (!item) return;
+            elements.galleryType.value = item.type || "single";
+            elements.galleryCardClass.value = item.cardClass || "";
+            elements.galleryImageSrc.value = item.imageSrc || "";
+            elements.galleryCompositionClass.value = item.compositionClass || "";
+            elements.galleryMobileImages.value = Array.isArray(item.images) ? item.images.map((image) => `${image.src || ""}|${image.enAlt || ""}|${image.esAlt || ""}`).join("\n") : "";
+            elements.galleryEnTitle.value = item.en?.title || "";
+            elements.galleryEnText.value = item.en?.text || "";
+            elements.galleryEnAlt.value = item.en?.alt || "";
+            elements.galleryEnAria.value = item.en?.ariaLabel || "";
+            elements.galleryEsTitle.value = item.es?.title || "";
+            elements.galleryEsText.value = item.es?.text || "";
+            elements.galleryEsAlt.value = item.es?.alt || "";
+            elements.galleryEsAria.value = item.es?.ariaLabel || "";
+        }
+
+        function hydrateExperience() {
+            const item = content.experience[activeExperienceIndex];
+            if (!item) return;
+            elements.experienceIcon.value = item.icon || "discovery";
+            elements.experienceEnStage.value = item.en?.stage || "";
+            elements.experienceEnTitle.value = item.en?.title || "";
+            elements.experienceEnText.value = item.en?.text || "";
+            elements.experienceEsStage.value = item.es?.stage || "";
+            elements.experienceEsTitle.value = item.es?.title || "";
+            elements.experienceEsText.value = item.es?.text || "";
+        }
+
+        function hydrateAll() {
+            renderList(elements.projectList, projects, activeProjectIndex, (project) => `<strong>${project.en?.title || project.slug || "Untitled project"}</strong><span>${project.status || "in-progress"} · ${project.version || "No version"}</span>`);
+            renderList(elements.galleryList, content.gallery, activeGalleryIndex, (item) => `<strong>${item.en?.title || "Gallery item"}</strong><span>${item.type || "single"}</span>`);
+            renderList(elements.experienceList, content.experience, activeExperienceIndex, (item) => `<strong>${item.en?.title || "Experience item"}</strong><span>${item.icon || "discovery"}</span>`);
+            hydrateProject();
+            hydrateTranslations();
+            hydrateGallery();
+            hydrateExperience();
+            updateSidebarMetrics();
+        }
+
+        function syncProject() {
+            const project = projects[activeProjectIndex];
+            if (!project) return;
+            project.slug = elements.slug.value.trim();
+            project.status = elements.status.value;
+            project.version = elements.version.value.trim();
+            project.link = elements.link.value.trim();
+            project.stack = asLines(elements.stack.value);
+            project.en = { tag: elements.enTag.value.trim(), title: elements.enTitle.value.trim(), summary: elements.enSummary.value.trim(), highlights: asLines(elements.enHighlights.value) };
+            project.es = { tag: elements.esTag.value.trim(), title: elements.esTitle.value.trim(), summary: elements.esSummary.value.trim(), highlights: asLines(elements.esHighlights.value) };
+            hydrateAll();
+        }
+
+        function syncTranslations() {
+            const map = {
+                pageTitle: [elements.enPageTitle, elements.esPageTitle], pageDescription: [elements.enPageDescription, elements.esPageDescription], navProjects: [elements.enNavProjects, elements.esNavProjects], navGallery: [elements.enNavGallery, elements.esNavGallery], navExperience: [elements.enNavExperience, elements.esNavExperience], navContact: [elements.enNavContact, elements.esNavContact], heroTitle: [elements.enHeroTitle, elements.esHeroTitle], heroText: [elements.enHeroText, elements.esHeroText], heroPrimaryCta: [elements.enHeroCta, elements.esHeroCta], projectsKicker: [elements.enProjectsKicker, elements.esProjectsKicker], projectsTitle: [elements.enProjectsTitle, elements.esProjectsTitle], filterAll: [elements.enFilterAll, elements.esFilterAll], filterReleased: [elements.enFilterReleased, elements.esFilterReleased], filterProgress: [elements.enFilterProgress, elements.esFilterProgress], galleryKicker: [elements.enGalleryKicker, elements.esGalleryKicker], galleryTitle: [elements.enGalleryTitle, elements.esGalleryTitle], galleryAside: [elements.enGalleryAside, elements.esGalleryAside], experienceKicker: [elements.enExperienceKicker, elements.esExperienceKicker], experienceTitle: [elements.enExperienceTitle, elements.esExperienceTitle], experienceAside: [elements.enExperienceAside, elements.esExperienceAside], techKicker: [elements.enTechKicker, elements.esTechKicker], techTitle: [elements.enTechTitle, elements.esTechTitle], contactKicker: [elements.enContactKicker, elements.esContactKicker], contactTitle: [elements.enContactTitle, elements.esContactTitle], contactText: [elements.enContactText, elements.esContactText], copyButton: [elements.enCopyButton, elements.esCopyButton], copySuccess: [elements.enCopySuccess, elements.esCopySuccess], copyError: [elements.enCopyError, elements.esCopyError], contactNote: [elements.enContactNote, elements.esContactNote]
+            };
+            Object.entries(map).forEach(([key, pair]) => {
+                content.translations.en[key] = pair[0].value.trim();
+                content.translations.es[key] = pair[1].value.trim();
+            });
+            content.contact.email = elements.contactEmail.value.trim();
+            content.tech = asLines(elements.techItems.value);
+        }
+
+        function syncGallery() {
+            const item = content.gallery[activeGalleryIndex];
+            if (!item) return;
+            item.type = elements.galleryType.value;
+            item.cardClass = elements.galleryCardClass.value.trim();
+            item.imageSrc = elements.galleryImageSrc.value.trim();
+            item.compositionClass = elements.galleryCompositionClass.value.trim();
+            item.images = asLines(elements.galleryMobileImages.value).map((line) => {
+                const [src = "", enAlt = "", esAlt = ""] = line.split("|");
+                return { src: src.trim(), enAlt: enAlt.trim(), esAlt: esAlt.trim() };
+            });
+            item.en = { ...(item.en || {}), title: elements.galleryEnTitle.value.trim(), text: elements.galleryEnText.value.trim(), alt: elements.galleryEnAlt.value.trim(), ariaLabel: elements.galleryEnAria.value.trim() };
+            item.es = { ...(item.es || {}), title: elements.galleryEsTitle.value.trim(), text: elements.galleryEsText.value.trim(), alt: elements.galleryEsAlt.value.trim(), ariaLabel: elements.galleryEsAria.value.trim() };
+            hydrateAll();
+        }
+
+        function syncExperience() {
+            const item = content.experience[activeExperienceIndex];
+            if (!item) return;
+            item.icon = elements.experienceIcon.value;
+            item.en = { stage: elements.experienceEnStage.value.trim(), title: elements.experienceEnTitle.value.trim(), text: elements.experienceEnText.value.trim() };
+            item.es = { stage: elements.experienceEsStage.value.trim(), title: elements.experienceEsTitle.value.trim(), text: elements.experienceEsText.value.trim() };
+            hydrateAll();
+        }
+
+        [elements.slug, elements.status, elements.version, elements.link, elements.stack, elements.enTag, elements.enTitle, elements.enSummary, elements.enHighlights, elements.esTag, elements.esTitle, elements.esSummary, elements.esHighlights].forEach((field) => {
+            field.addEventListener("input", syncProject);
+            field.addEventListener("change", syncProject);
+        });
+
+        [elements.enPageTitle, elements.enPageDescription, elements.enNavProjects, elements.enNavGallery, elements.enNavExperience, elements.enNavContact, elements.enHeroTitle, elements.enHeroText, elements.enHeroCta, elements.enProjectsKicker, elements.enProjectsTitle, elements.enFilterAll, elements.enFilterReleased, elements.enFilterProgress, elements.enGalleryKicker, elements.enGalleryTitle, elements.enGalleryAside, elements.enExperienceKicker, elements.enExperienceTitle, elements.enExperienceAside, elements.enTechKicker, elements.enTechTitle, elements.enContactKicker, elements.enContactTitle, elements.enContactText, elements.enCopyButton, elements.enCopySuccess, elements.enCopyError, elements.enContactNote, elements.esPageTitle, elements.esPageDescription, elements.esNavProjects, elements.esNavGallery, elements.esNavExperience, elements.esNavContact, elements.esHeroTitle, elements.esHeroText, elements.esHeroCta, elements.esProjectsKicker, elements.esProjectsTitle, elements.esFilterAll, elements.esFilterReleased, elements.esFilterProgress, elements.esGalleryKicker, elements.esGalleryTitle, elements.esGalleryAside, elements.esExperienceKicker, elements.esExperienceTitle, elements.esExperienceAside, elements.esTechKicker, elements.esTechTitle, elements.esContactKicker, elements.esContactTitle, elements.esContactText, elements.esCopyButton, elements.esCopySuccess, elements.esCopyError, elements.esContactNote, elements.contactEmail, elements.techItems].forEach((field) => {
+            field.addEventListener("input", syncTranslations);
+            field.addEventListener("change", syncTranslations);
+        });
+
+        [elements.galleryType, elements.galleryCardClass, elements.galleryImageSrc, elements.galleryCompositionClass, elements.galleryMobileImages, elements.galleryEnTitle, elements.galleryEnText, elements.galleryEnAlt, elements.galleryEnAria, elements.galleryEsTitle, elements.galleryEsText, elements.galleryEsAlt, elements.galleryEsAria].forEach((field) => {
+            field.addEventListener("input", syncGallery);
+            field.addEventListener("change", syncGallery);
+        });
+
+        [elements.experienceIcon, elements.experienceEnStage, elements.experienceEnTitle, elements.experienceEnText, elements.experienceEsStage, elements.experienceEsTitle, elements.experienceEsText].forEach((field) => {
+            field.addEventListener("input", syncExperience);
+            field.addEventListener("change", syncExperience);
+        });
+
+        elements.addProject.addEventListener("click", () => { projects.push(createEmptyProject()); activeProjectIndex = projects.length - 1; hydrateAll(); });
+        elements.duplicateProject.addEventListener("click", () => { const clone = structuredClone(projects[activeProjectIndex]); clone.slug = `${clone.slug || "project"}-copy`; projects.splice(activeProjectIndex + 1, 0, clone); activeProjectIndex += 1; hydrateAll(); });
+        elements.deleteProject.addEventListener("click", () => { if (projects.length <= 1) return; projects.splice(activeProjectIndex, 1); activeProjectIndex = Math.max(0, activeProjectIndex - 1); hydrateAll(); });
+        elements.moveProjectUp.addEventListener("click", () => { if (activeProjectIndex === 0) return; [projects[activeProjectIndex - 1], projects[activeProjectIndex]] = [projects[activeProjectIndex], projects[activeProjectIndex - 1]]; activeProjectIndex -= 1; hydrateAll(); });
+        elements.moveProjectDown.addEventListener("click", () => { if (activeProjectIndex >= projects.length - 1) return; [projects[activeProjectIndex], projects[activeProjectIndex + 1]] = [projects[activeProjectIndex + 1], projects[activeProjectIndex]]; activeProjectIndex += 1; hydrateAll(); });
+
+        elements.addGallery.addEventListener("click", () => { content.gallery.push(createEmptyGalleryItem()); activeGalleryIndex = content.gallery.length - 1; hydrateAll(); });
+        elements.deleteGallery.addEventListener("click", () => { if (content.gallery.length <= 1) return; content.gallery.splice(activeGalleryIndex, 1); activeGalleryIndex = Math.max(0, activeGalleryIndex - 1); hydrateAll(); });
+        elements.moveGalleryUp.addEventListener("click", () => { if (activeGalleryIndex === 0) return; [content.gallery[activeGalleryIndex - 1], content.gallery[activeGalleryIndex]] = [content.gallery[activeGalleryIndex], content.gallery[activeGalleryIndex - 1]]; activeGalleryIndex -= 1; hydrateAll(); });
+        elements.moveGalleryDown.addEventListener("click", () => { if (activeGalleryIndex >= content.gallery.length - 1) return; [content.gallery[activeGalleryIndex], content.gallery[activeGalleryIndex + 1]] = [content.gallery[activeGalleryIndex + 1], content.gallery[activeGalleryIndex]]; activeGalleryIndex += 1; hydrateAll(); });
+
+        elements.addExperience.addEventListener("click", () => { content.experience.push(createEmptyExperienceItem()); activeExperienceIndex = content.experience.length - 1; hydrateAll(); });
+        elements.deleteExperience.addEventListener("click", () => { if (content.experience.length <= 1) return; content.experience.splice(activeExperienceIndex, 1); activeExperienceIndex = Math.max(0, activeExperienceIndex - 1); hydrateAll(); });
+        elements.moveExperienceUp.addEventListener("click", () => { if (activeExperienceIndex === 0) return; [content.experience[activeExperienceIndex - 1], content.experience[activeExperienceIndex]] = [content.experience[activeExperienceIndex], content.experience[activeExperienceIndex - 1]]; activeExperienceIndex -= 1; hydrateAll(); });
+        elements.moveExperienceDown.addEventListener("click", () => { if (activeExperienceIndex >= content.experience.length - 1) return; [content.experience[activeExperienceIndex], content.experience[activeExperienceIndex + 1]] = [content.experience[activeExperienceIndex + 1], content.experience[activeExperienceIndex]]; activeExperienceIndex += 1; hydrateAll(); });
+
+        elements.saveProjects.addEventListener("click", async () => { await saveFile("projects-data.js", serializeProjects()); });
+        elements.saveContent.addEventListener("click", async () => { await saveFile("content-data.js", serializeContent()); });
+        elements.downloadProjects.addEventListener("click", () => downloadFile("projects-data.js", serializeProjects()));
+        elements.downloadContent.addEventListener("click", () => downloadFile("content-data.js", serializeContent()));
+
+        tabButtons.forEach((button) => {
+            button.addEventListener("click", () => {
+                applyEditorPanel(button.dataset.editorTab || "projects");
+            });
+        });
+
+        hydrateAll();
+        applyEditorPanel(activeEditorPanel);
+    </script>
+</body>
+</html>
