@@ -140,35 +140,38 @@ window.portfolioProjects = [
     {
         "slug": "findhome",
         "status": "released",
-        "version": "v1.0.0",
+        "version": "v1.3.4",
         "link": "https://findhome-peach.vercel.app/",
         "stack": [
-            "Vite",
-            "Vanilla JavaScript",
+            "HTML5",
+            "CSS3",
+            "JavaScript",
+            "Chart.js",
             "LocalStorage",
             "GitHub Gist Sync",
+            "Vercel Function",
             "Vercel"
         ],
         "en": {
             "tag": "Released · Public demo",
             "title": "FINDHOME",
-            "summary": "Home-buying decision assistant focused on financing analysis, visit checklists, legal steps, and shared progress for a real property purchase workflow.",
+            "summary": "Responsive housing-purchase assistant for Catalonia, built to organize candidate properties, analyze mortgage viability, compare ICF Emancipacio banks, and coordinate a shared buying workflow across three users.",
             "highlights": [
-                "Financial dashboard with mortgage ratio checks, initial-cost breakdowns, and price-zone analysis",
-                "Step-by-step operational flow covering visit validation, documentation, deposit agreement, financing, and notary signing",
-                "Shared synchronization model backed by a central GitHub Gist while keeping secrets server-side in Vercel",
-                "Restricted workspace and checklist tooling designed for a practical real-estate purchase process"
+                "Dynamic dashboard with five modal checklists per property, including visit planning, documentation, deposit agreement, financing, and notary signing",
+                "Property management with search, editing, advanced filters, multi-sort, integrated visit calendar, and a dedicated Leaflet map tab with geolocation",
+                "Mortgage viability calculator plus financial, legal, and tax guidance, including comparison of nine banks attached to ICF Emancipacio",
+                "Immediate local copy and three-user shared sync through a Vercel API and a single master GitHub Gist without exposing GitHub credentials in the browser"
             ]
         },
         "es": {
             "tag": "Publicado · Demo pública",
             "title": "FINDHOME",
-            "summary": "Asistente para la compra de vivienda centrado en análisis de financiación, checklists de visita, pasos legales y progreso compartido para un proceso real de compra inmobiliaria.",
+            "summary": "Asistente responsive para organizar y analizar la compra de vivienda en Cataluna, pensado para gestionar pisos candidatos, calcular viabilidad hipotecaria, comparar entidades del ICF Emancipacio y coordinar un flujo compartido entre tres usuarios.",
             "highlights": [
-                "Panel financiero con control de ratio hipotecaria, desglose de gastos iniciales y análisis de zonas de precio",
-                "Flujo operativo paso a paso para visita, documentación, arras, financiación y firma ante notario",
-                "Modelo de sincronización compartida apoyado en GitHub Gist central manteniendo secretos protegidos en Vercel",
-                "Espacio restringido y sistema de checklists diseñados para un proceso práctico de compra de vivienda"
+                "Dashboard dinamico con cinco checklists modales por piso, incluyendo visita, documentacion, arras, financiacion y notaria",
+                "Gestion de pisos con busqueda, edicion, filtros avanzados, ordenacion multiple, calendario de visitas y una pestana de mapa propia con Leaflet y geolocalizacion",
+                "Calculadora de viabilidad hipotecaria junto con informacion financiera, legal y fiscal, incluyendo comparador de nueve entidades adheridas al ICF Emancipacio",
+                "Copia local inmediata y sincronizacion compartida para tres usuarios mediante una API de Vercel y un unico GitHub Gist maestro sin exponer credenciales en el navegador"
             ]
         }
     },
@@ -182,28 +185,30 @@ window.portfolioProjects = [
             "CSS",
             "JavaScript",
             "Chart.js",
-            "Dropbox SDK"
+            "Dropbox SDK",
+            "PWA",
+            "Vercel"
         ],
         "en": {
             "tag": "Released · Public repo",
             "title": "LifePilot 2",
-            "summary": "Progressive web app for health tracking, physical recovery, diet planning, and daily habits, delivered as an installable product with offline support and cloud synchronization.",
+            "summary": "Progressive web app for health tracking, lumbar recovery, diet planning, and daily habits, delivered as a responsive installable tool with offline support and Dropbox synchronization.",
             "highlights": [
-                "Health, recovery, and routine tracking brought together in one installable PWA flow",
-                "Interactive exercise, diet, self-care, and notes modules backed by browser persistence",
-                "Charts and statistics layer built with Chart.js for progress visibility over time",
-                "Dropbox synchronization added for backup and multi-device continuity"
+                "Daily logging for weight, blood pressure, pulse, sleep, water intake, pain, medication, and personal notes",
+                "Rehabilitation flow with interactive exercise and stretching routines organized by weeks and intensity phases",
+                "Customizable diet, self-care, and settings flows combined with a Chart.js dashboard for progress and completion tracking",
+                "Offline-installable PWA with localStorage persistence, Dropbox backup, and Vercel continuous deployment"
             ]
         },
         "es": {
             "tag": "Publicado · Repo público",
             "title": "LifePilot 2",
-            "summary": "Aplicación web progresiva para seguimiento de salud, recuperación física, planificación de dieta y hábitos diarios, entregada como producto instalable con soporte offline y sincronización en la nube.",
+            "summary": "Aplicación web progresiva para seguimiento de salud, recuperación lumbar, planificación de dieta y hábitos diarios, entregada como herramienta responsive instalable con soporte offline y sincronización mediante Dropbox.",
             "highlights": [
-                "Seguimiento de salud, recuperación y rutinas unificado en un flujo PWA instalable",
-                "Módulos interactivos de ejercicio, dieta, autocuidado y notas apoyados en persistencia del navegador",
-                "Capa de gráficas y estadísticas construida con Chart.js para visualizar el progreso en el tiempo",
-                "Sincronización con Dropbox para backup y continuidad entre dispositivos"
+                "Registro diario de peso, tensión arterial, pulso, sueño, agua, dolor, medicación y notas personales",
+                "Flujo de rehabilitación con rutinas interactivas de ejercicio y estiramientos organizadas por semanas y fases de intensidad",
+                "Flujos configurables de dieta, autocuidado y ajustes combinados con un panel Chart.js para progreso y cumplimiento",
+                "PWA instalable con soporte offline, persistencia en localStorage, backup en Dropbox y despliegue continuo en Vercel"
             ]
         }
     },
@@ -216,29 +221,29 @@ window.portfolioProjects = [
             "HTML",
             "CSS",
             "JavaScript",
-            "Cloud Sync",
-            "Vercel"
+            "LocalStorage",
+            "Excel Workflow"
         ],
         "en": {
             "tag": "Released · Public demo",
             "title": "PureSurface Control",
-            "summary": "Operational production dashboard for tracking materials, assets, and launch readiness across product versions with a clear progress-oriented control surface.",
+            "summary": "Production control dashboard for PureSurface, built to manage a Blender material library through KPI tracking, launch-focused planning, and editable status control for materials and assets.",
             "highlights": [
-                "Version-based tracking for materials and assets with done-versus-todo visibility by production stage",
-                "Launch gate overview that surfaces sellable inventory and release readiness in one glance",
-                "Dashboard structure rebuilt from the PureSurface UI picker to keep category state consistent",
-                "Cloud sync configuration exposed as part of the operational workflow"
+                "Dashboard overview for V1, V2, and V3 production targets covering 245 materials and 100 assets",
+                "Inline editing, filtering, and sorting across the materials tracker plus status control for the asset tracker",
+                "Launch-critical V1 focus with next-action logic, interactive launch checklist, notes, and progress bar",
+                "Category coverage cards, preview guidelines, and a column glossary packed into a standalone browser-based control system"
             ]
         },
         "es": {
             "tag": "Publicado · Demo pública",
             "title": "PureSurface Control",
-            "summary": "Dashboard operativo de producción para seguir materiales, assets y preparación de lanzamiento entre versiones, con una superficie de control clara y orientada al progreso.",
+            "summary": "Dashboard de control de producción para PureSurface, diseñado para gestionar una librería de materiales de Blender mediante seguimiento KPI, planificación de lanzamiento y control editable de estado para materiales y assets.",
             "highlights": [
-                "Seguimiento por versiones de materiales y assets con visibilidad clara de completado frente a pendiente",
-                "Vista de launch gate que muestra inventario vendible y estado de salida de forma inmediata",
-                "Estructura del dashboard reconstruida desde el selector de UI de PureSurface para mantener consistencia de categorías",
-                "Configuración de sincronización cloud integrada como parte del flujo operativo"
+                "Vista general de V1, V2 y V3 con objetivos de produccion que cubren 245 materiales y 100 assets",
+                "Edicion inline, filtrado y ordenacion en el tracker de materiales, mas control de estado en el tracker de assets",
+                "Foco en el lanzamiento V1 con logica de siguiente accion, checklist interactiva, notas y barra de progreso",
+                "Tarjetas de cobertura por categoria, guia de previews y glosario de columnas dentro de un sistema standalone para navegador"
             ]
         }
     },
@@ -248,30 +253,32 @@ window.portfolioProjects = [
         "version": "v1.0.0",
         "link": "https://3d-workout.vercel.app/",
         "stack": [
-            "Content Site",
-            "Market Research",
-            "Responsive Editorial UI"
+            "HTML5",
+            "CSS3",
+            "JavaScript",
+            "LocalStorage",
+            "SPA UI"
         ],
         "en": {
             "tag": "Released · Public demo",
             "title": "3D Workout",
-            "summary": "Editorial product focused on the 3D asset market, presenting monetization niches, technical quality standards, and commercial positioning for creators selling models.",
+            "summary": "Interactive SPA-style dashboard built to track profitable niches and model opportunities in the 3D market, with a strong focus on Blender, Geometry Nodes, and real production industries such as VFX, game-ready assets, architecture, and BIM.",
             "highlights": [
-                "Explains where 3D creators can still find margin through technical, BIM, and game-ready asset categories",
-                "Uses market framing around demand versus saturation instead of generic portfolio-style claims",
-                "Highlights conversion gains from multi-format delivery and common red flags that trigger buyer refunds",
-                "Structured as a polished content experience with a strong niche-specific positioning angle"
+                "Analytical dashboard with market macro-trends, saturation-versus-demand views, and format conversion ratios",
+                "Eight curated profitable paths with dedicated 90-day learning plans oriented to practical Geometry Nodes use cases",
+                "Strict technical checklist covering real studio red flags such as pivots, N-gons, texture packaging, collisions, and LODs",
+                "Browser-based SPA navigation with localStorage persistence plus import and export of progress data as JSON"
             ]
         },
         "es": {
             "tag": "Publicado · Demo pública",
             "title": "3D Workout",
-            "summary": "Producto editorial centrado en el mercado de assets 3D, presentado alrededor de nichos de monetización, estándares técnicos de calidad y posicionamiento comercial para creadores que venden modelos.",
+            "summary": "Panel interactivo estilo SPA diseñado para seguir nichos y oportunidades rentables del mercado 3D, con foco fuerte en Blender, Geometry Nodes y sectores reales como VFX, game-ready, arquitectura y BIM.",
             "highlights": [
-                "Explica dónde sigue habiendo margen para creadores 3D mediante categorías técnicas, BIM y assets game-ready",
-                "Usa framing de mercado basado en demanda frente a saturación en lugar de claims genéricos de portfolio",
-                "Destaca mejoras de conversión por entrega en múltiples formatos y los red flags que provocan devoluciones",
-                "Estructurado como una experiencia de contenido pulida con un ángulo de posicionamiento muy específico"
+                "Dashboard analitico con macrotendencias del mercado, vistas de saturacion frente a demanda y ratios de conversion por formato",
+                "Ocho caminos rentables seleccionados con rutas independientes de 90 dias orientadas al uso practico de Geometry Nodes",
+                "Checklist tecnico estricto con red flags reales de estudio como pivotes, N-gons, empaquetado de texturas, colisiones y LODs",
+                "Navegacion SPA en navegador con persistencia en localStorage mas importacion y exportacion del progreso en JSON"
             ]
         }
     },
