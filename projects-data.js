@@ -138,6 +138,140 @@ window.portfolioProjects = [
         }
     },
     {
+        "slug": "findhome",
+        "status": "released",
+        "version": "v1.0.0",
+        "link": "",
+        "stack": [
+            "Web App",
+            "Responsive UI",
+            "Product Design"
+        ],
+        "en": {
+            "tag": "Released · Private or pending public link",
+            "title": "FINDHOME",
+            "summary": "Completed product now added to the released portfolio selection, presented as a finished web application with a public-facing delivery standard and production-ready positioning.",
+            "highlights": [
+                "Completed product delivery added to the released section of the portfolio",
+                "Responsive public-facing experience shaped around usability and clear product presentation",
+                "Structured as a finished case instead of an in-progress prototype",
+                "Ready to expose with the final repository or live link once confirmed"
+            ]
+        },
+        "es": {
+            "tag": "Publicado · Link privado o pendiente",
+            "title": "FINDHOME",
+            "summary": "Producto completado y añadido a la selección de proyectos publicados del portfolio, presentado como una aplicación web terminada con estándar de entrega pública y posicionamiento listo para mostrar.",
+            "highlights": [
+                "Entrega completada y movida a la sección de proyectos publicados del portfolio",
+                "Experiencia pública responsive planteada con foco en usabilidad y presentación clara del producto",
+                "Estructurado como caso terminado y no como prototipo en desarrollo",
+                "Preparado para exponer el repo final o la URL pública en cuanto se confirme"
+            ]
+        }
+    },
+    {
+        "slug": "lifepilot2",
+        "status": "released",
+        "version": "v1.0.0",
+        "link": "https://github.com/raferto1973/lifepilot2",
+        "stack": [
+            "HTML",
+            "CSS",
+            "JavaScript",
+            "Chart.js",
+            "Dropbox SDK"
+        ],
+        "en": {
+            "tag": "Released · Public repo",
+            "title": "LifePilot 2",
+            "summary": "Progressive web app for health tracking, physical recovery, diet planning, and daily habits, delivered as an installable product with offline support and cloud synchronization.",
+            "highlights": [
+                "Health, recovery, and routine tracking brought together in one installable PWA flow",
+                "Interactive exercise, diet, self-care, and notes modules backed by browser persistence",
+                "Charts and statistics layer built with Chart.js for progress visibility over time",
+                "Dropbox synchronization added for backup and multi-device continuity"
+            ]
+        },
+        "es": {
+            "tag": "Publicado · Repo público",
+            "title": "LifePilot 2",
+            "summary": "Aplicación web progresiva para seguimiento de salud, recuperación física, planificación de dieta y hábitos diarios, entregada como producto instalable con soporte offline y sincronización en la nube.",
+            "highlights": [
+                "Seguimiento de salud, recuperación y rutinas unificado en un flujo PWA instalable",
+                "Módulos interactivos de ejercicio, dieta, autocuidado y notas apoyados en persistencia del navegador",
+                "Capa de gráficas y estadísticas construida con Chart.js para visualizar el progreso en el tiempo",
+                "Sincronización con Dropbox para backup y continuidad entre dispositivos"
+            ]
+        }
+    },
+    {
+        "slug": "puresurface-control",
+        "status": "released",
+        "version": "v1.0.0",
+        "link": "",
+        "stack": [
+            "Web App",
+            "Responsive UI",
+            "Operational Flows"
+        ],
+        "en": {
+            "tag": "Released · Private or pending public link",
+            "title": "PureSurface Control",
+            "summary": "Completed control-oriented product added to the released portfolio section, positioned as a finished operational web application with a clear workflow and public presentation value.",
+            "highlights": [
+                "Finished operational product now represented in the released project selection",
+                "Designed around control flows, structured navigation, and practical user operation",
+                "Presented as a completed delivery rather than an internal work-in-progress",
+                "Prepared for a final repo or live URL once the exact public link is confirmed"
+            ]
+        },
+        "es": {
+            "tag": "Publicado · Link privado o pendiente",
+            "title": "PureSurface Control",
+            "summary": "Producto orientado a control ya completado y añadido a la sección de proyectos publicados, posicionado como una aplicación web operativa terminada con flujos claros y valor de presentación pública.",
+            "highlights": [
+                "Producto operativo finalizado y ya representado dentro de la selección publicada",
+                "Diseñado alrededor de flujos de control, navegación estructurada y uso práctico",
+                "Presentado como entrega cerrada y no como trabajo aún en curso",
+                "Preparado para añadir repo final o URL pública en cuanto se confirme el enlace exacto"
+            ]
+        }
+    },
+    {
+        "slug": "3d-workout",
+        "status": "released",
+        "version": "v1.0.0",
+        "link": "",
+        "stack": [
+            "Web App",
+            "3D UI",
+            "Workout Flows"
+        ],
+        "en": {
+            "tag": "Released · Private or pending public link",
+            "title": "3D Workout",
+            "summary": "Completed workout-focused web product added to the released portfolio lineup, aimed at presenting a finished interactive training experience with strong visual direction.",
+            "highlights": [
+                "Released fitness-oriented product with a more visual and interactive presentation angle",
+                "Experience framed around workout flows, guided usage, and finished delivery quality",
+                "Strong candidate for public showcase because of its more distinctive interaction model",
+                "Ready to expose with the exact repository or live product URL when confirmed"
+            ]
+        },
+        "es": {
+            "tag": "Publicado · Link privado o pendiente",
+            "title": "3D Workout",
+            "summary": "Producto web orientado a entrenamiento ya completado y añadido al bloque de proyectos publicados, pensado para mostrar una experiencia interactiva terminada con una dirección visual más marcada.",
+            "highlights": [
+                "Producto fitness publicado con un enfoque de presentación más visual e interactivo",
+                "Experiencia planteada alrededor de flujos de entrenamiento, uso guiado y calidad de entrega final",
+                "Buen candidato para escaparate público por su modelo de interacción más distintivo",
+                "Listo para exponer el repo exacto o la URL final del producto cuando se confirme"
+            ]
+        }
+    },
+    {
         "slug": "journeybook",
         "status": "in-progress",
         "version": "Prototype",
@@ -204,41 +338,6 @@ window.portfolioProjects = [
                 "Fundación frontend multilingüe preparada con Angular standalone y soporte de traducciones",
                 "Base backend alineada con catálogo, checkout y flujos de pedido para una tienda online local",
                 "Integraciones previstas para imágenes, pagos y correo transaccional contempladas desde la configuración inicial"
-            ]
-        }
-    },
-    {
-        "slug": "lifepilot",
-        "status": "in-progress",
-        "version": "Prototype",
-        "link": "",
-        "stack": [
-            "React",
-            "Vite",
-            "TypeScript",
-            "Tauri",
-            "SQLite"
-        ],
-        "en": {
-            "tag": "In progress · Health platform",
-            "title": "LifePilot",
-            "summary": "Mobile-first health application in active redefinition, evolving from a personal prototype into a local-first, installable, multilingual product with personalized goals and plans.",
-            "highlights": [
-                "React plus Tauri foundation validated with native build support, installable delivery, and resilient local persistence",
-                "Real navigation and editable flows for daily check-ins, health tracking, weekly review, activity logging, and plan management",
-                "SQLite runtime with browser fallback, import and restore tooling, and structured records designed for continuity",
-                "Next phase focused on generalized onboarding, user profiles, personalized goals, and a smarter plan engine ready for future AI support"
-            ]
-        },
-        "es": {
-            "tag": "En curso · Plataforma de salud",
-            "title": "LifePilot",
-            "summary": "Aplicación de salud mobile-first en redefinición activa, evolucionando desde un prototipo personal hacia un producto local-first, instalable y multiidioma con objetivos y planes personalizados.",
-            "highlights": [
-                "Base React más Tauri ya validada con build nativo, entrega instalable y persistencia local robusta",
-                "Navegación real y flujos editables para check-ins diarios, seguimiento de salud, revisión semanal, registro de actividad y gestión del plan",
-                "SQLite en runtime con fallback en navegador, herramientas de importación y restauración, y registros estructurados pensados para continuidad",
-                "Siguiente fase centrada en onboarding generalizado, perfiles de usuario, objetivos personalizados y un motor de plan más inteligente preparado para IA"
             ]
         }
     },
