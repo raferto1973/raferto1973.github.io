@@ -141,32 +141,34 @@ window.portfolioProjects = [
         "slug": "findhome",
         "status": "released",
         "version": "v1.0.0",
-        "link": "",
+        "link": "https://findhome-peach.vercel.app/",
         "stack": [
-            "Web App",
-            "Responsive UI",
-            "Product Design"
+            "Vite",
+            "Vanilla JavaScript",
+            "LocalStorage",
+            "GitHub Gist Sync",
+            "Vercel"
         ],
         "en": {
-            "tag": "Released · Private or pending public link",
+            "tag": "Released · Public demo",
             "title": "FINDHOME",
-            "summary": "Completed product now added to the released portfolio selection, presented as a finished web application with a public-facing delivery standard and production-ready positioning.",
+            "summary": "Home-buying decision assistant focused on financing analysis, visit checklists, legal steps, and shared progress for a real property purchase workflow.",
             "highlights": [
-                "Completed product delivery added to the released section of the portfolio",
-                "Responsive public-facing experience shaped around usability and clear product presentation",
-                "Structured as a finished case instead of an in-progress prototype",
-                "Ready to expose with the final repository or live link once confirmed"
+                "Financial dashboard with mortgage ratio checks, initial-cost breakdowns, and price-zone analysis",
+                "Step-by-step operational flow covering visit validation, documentation, deposit agreement, financing, and notary signing",
+                "Shared synchronization model backed by a central GitHub Gist while keeping secrets server-side in Vercel",
+                "Restricted workspace and checklist tooling designed for a practical real-estate purchase process"
             ]
         },
         "es": {
-            "tag": "Publicado · Link privado o pendiente",
+            "tag": "Publicado · Demo pública",
             "title": "FINDHOME",
-            "summary": "Producto completado y añadido a la selección de proyectos publicados del portfolio, presentado como una aplicación web terminada con estándar de entrega pública y posicionamiento listo para mostrar.",
+            "summary": "Asistente para la compra de vivienda centrado en análisis de financiación, checklists de visita, pasos legales y progreso compartido para un proceso real de compra inmobiliaria.",
             "highlights": [
-                "Entrega completada y movida a la sección de proyectos publicados del portfolio",
-                "Experiencia pública responsive planteada con foco en usabilidad y presentación clara del producto",
-                "Estructurado como caso terminado y no como prototipo en desarrollo",
-                "Preparado para exponer el repo final o la URL pública en cuanto se confirme"
+                "Panel financiero con control de ratio hipotecaria, desglose de gastos iniciales y análisis de zonas de precio",
+                "Flujo operativo paso a paso para visita, documentación, arras, financiación y firma ante notario",
+                "Modelo de sincronización compartida apoyado en GitHub Gist central manteniendo secretos protegidos en Vercel",
+                "Espacio restringido y sistema de checklists diseñados para un proceso práctico de compra de vivienda"
             ]
         }
     },
@@ -209,32 +211,34 @@ window.portfolioProjects = [
         "slug": "puresurface-control",
         "status": "released",
         "version": "v1.0.0",
-        "link": "",
+        "link": "https://puresurface-control.vercel.app/",
         "stack": [
-            "Web App",
-            "Responsive UI",
-            "Operational Flows"
+            "HTML",
+            "CSS",
+            "JavaScript",
+            "Cloud Sync",
+            "Vercel"
         ],
         "en": {
-            "tag": "Released · Private or pending public link",
+            "tag": "Released · Public demo",
             "title": "PureSurface Control",
-            "summary": "Completed control-oriented product added to the released portfolio section, positioned as a finished operational web application with a clear workflow and public presentation value.",
+            "summary": "Operational production dashboard for tracking materials, assets, and launch readiness across product versions with a clear progress-oriented control surface.",
             "highlights": [
-                "Finished operational product now represented in the released project selection",
-                "Designed around control flows, structured navigation, and practical user operation",
-                "Presented as a completed delivery rather than an internal work-in-progress",
-                "Prepared for a final repo or live URL once the exact public link is confirmed"
+                "Version-based tracking for materials and assets with done-versus-todo visibility by production stage",
+                "Launch gate overview that surfaces sellable inventory and release readiness in one glance",
+                "Dashboard structure rebuilt from the PureSurface UI picker to keep category state consistent",
+                "Cloud sync configuration exposed as part of the operational workflow"
             ]
         },
         "es": {
-            "tag": "Publicado · Link privado o pendiente",
+            "tag": "Publicado · Demo pública",
             "title": "PureSurface Control",
-            "summary": "Producto orientado a control ya completado y añadido a la sección de proyectos publicados, posicionado como una aplicación web operativa terminada con flujos claros y valor de presentación pública.",
+            "summary": "Dashboard operativo de producción para seguir materiales, assets y preparación de lanzamiento entre versiones, con una superficie de control clara y orientada al progreso.",
             "highlights": [
-                "Producto operativo finalizado y ya representado dentro de la selección publicada",
-                "Diseñado alrededor de flujos de control, navegación estructurada y uso práctico",
-                "Presentado como entrega cerrada y no como trabajo aún en curso",
-                "Preparado para añadir repo final o URL pública en cuanto se confirme el enlace exacto"
+                "Seguimiento por versiones de materiales y assets con visibilidad clara de completado frente a pendiente",
+                "Vista de launch gate que muestra inventario vendible y estado de salida de forma inmediata",
+                "Estructura del dashboard reconstruida desde el selector de UI de PureSurface para mantener consistencia de categorías",
+                "Configuración de sincronización cloud integrada como parte del flujo operativo"
             ]
         }
     },
@@ -242,32 +246,32 @@ window.portfolioProjects = [
         "slug": "3d-workout",
         "status": "released",
         "version": "v1.0.0",
-        "link": "",
+        "link": "https://3d-workout.vercel.app/",
         "stack": [
-            "Web App",
-            "3D UI",
-            "Workout Flows"
+            "Content Site",
+            "Market Research",
+            "Responsive Editorial UI"
         ],
         "en": {
-            "tag": "Released · Private or pending public link",
+            "tag": "Released · Public demo",
             "title": "3D Workout",
-            "summary": "Completed workout-focused web product added to the released portfolio lineup, aimed at presenting a finished interactive training experience with strong visual direction.",
+            "summary": "Editorial product focused on the 3D asset market, presenting monetization niches, technical quality standards, and commercial positioning for creators selling models.",
             "highlights": [
-                "Released fitness-oriented product with a more visual and interactive presentation angle",
-                "Experience framed around workout flows, guided usage, and finished delivery quality",
-                "Strong candidate for public showcase because of its more distinctive interaction model",
-                "Ready to expose with the exact repository or live product URL when confirmed"
+                "Explains where 3D creators can still find margin through technical, BIM, and game-ready asset categories",
+                "Uses market framing around demand versus saturation instead of generic portfolio-style claims",
+                "Highlights conversion gains from multi-format delivery and common red flags that trigger buyer refunds",
+                "Structured as a polished content experience with a strong niche-specific positioning angle"
             ]
         },
         "es": {
-            "tag": "Publicado · Link privado o pendiente",
+            "tag": "Publicado · Demo pública",
             "title": "3D Workout",
-            "summary": "Producto web orientado a entrenamiento ya completado y añadido al bloque de proyectos publicados, pensado para mostrar una experiencia interactiva terminada con una dirección visual más marcada.",
+            "summary": "Producto editorial centrado en el mercado de assets 3D, presentado alrededor de nichos de monetización, estándares técnicos de calidad y posicionamiento comercial para creadores que venden modelos.",
             "highlights": [
-                "Producto fitness publicado con un enfoque de presentación más visual e interactivo",
-                "Experiencia planteada alrededor de flujos de entrenamiento, uso guiado y calidad de entrega final",
-                "Buen candidato para escaparate público por su modelo de interacción más distintivo",
-                "Listo para exponer el repo exacto o la URL final del producto cuando se confirme"
+                "Explica dónde sigue habiendo margen para creadores 3D mediante categorías técnicas, BIM y assets game-ready",
+                "Usa framing de mercado basado en demanda frente a saturación en lugar de claims genéricos de portfolio",
+                "Destaca mejoras de conversión por entrega en múltiples formatos y los red flags que provocan devoluciones",
+                "Estructurado como una experiencia de contenido pulida con un ángulo de posicionamiento muy específico"
             ]
         }
     },
